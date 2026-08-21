@@ -1,0 +1,54 @@
+name: Compilar y publicar produccion
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: produccion
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci --no-audit --no-fund
+
+      - name: Compilar
+        env:
+          # Si el sitio usa variables VITE_, agregalas aqui.
+          # Recuerda: terminan dentro del bundle publico, no pongas secretos.
+          VITE_SITE_URL: https://navsolutions.duckdns.org
+        run: npm run build
+
+      - name: Verificar el build
+        run: |
+          test -f dist/index.html || { echo "No se genero dist/index.html"; exit 1; }
+          echo "Build correcto:"
+          du -sh dist
+          ls dist
+
+      - name: Publicar en la rama production
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -B production
+          git add -f dist
+          git commit -m "build desde ${GITHUB_SHA::7}"
+          git push -f origin production
+          echo "Publicado. El servidor lo tomara en los proximos 2 minutos."
