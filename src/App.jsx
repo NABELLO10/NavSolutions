@@ -9,7 +9,6 @@ import Story from './sections/Story/Story'
 import Problems from './sections/Problems/Problems'
 import Transformation from './sections/Transformation/Transformation'
 import Systems from './sections/Systems/Systems'
-import Projects from './sections/Projects/Projects'
 import WhatWeTransform from './sections/Transform/WhatWeTransform'
 import Process from './sections/Process/Process'
 import KeySection from './sections/KeySection/KeySection'
@@ -58,9 +57,6 @@ export default function App() {
         </div>
         <div className="cv-auto">
           <Systems />
-        </div>
-        <div className="cv-auto">
-          <Projects />
         </div>
         <div className="cv-auto">
           <WhatWeTransform />

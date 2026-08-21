@@ -1,32 +1,26 @@
-import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import HeroGrid from './HeroGrid'
+import HeroNetwork from './HeroNetwork'
+import HeroTransition from './HeroTransition'
 import AnimatedTitle from '../../components/AnimatedTitle'
 import MagneticButton from '../../components/MagneticButton'
-
-const HeroOrb = lazy(() => import('./HeroOrb'))
 
 export default function Hero({ ready, enableHeavyFx }) {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden bg-base-950 pt-20 pb-6"
+      className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden pt-20 pb-6"
     >
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(5,8,13,0.99) 0%, rgba(5,8,13,0.96) 58%, rgba(5,8,13,0.74) 78%, rgba(5,8,13,0.24) 94%, rgba(5,8,13,0) 100%)',
+        }}
+      />
       <HeroGrid />
-
-      {enableHeavyFx && (
-        <div
-          className="absolute -right-[10%] top-1/2 hidden h-[52vh] w-[52vh] -translate-y-1/2 opacity-60 md:block lg:-right-[4%] lg:h-[60vh] lg:w-[60vh]"
-          style={{
-            maskImage: 'radial-gradient(circle, black 55%, transparent 78%)',
-            WebkitMaskImage: 'radial-gradient(circle, black 55%, transparent 78%)',
-          }}
-        >
-          <Suspense fallback={null}>
-            <HeroOrb />
-          </Suspense>
-        </div>
-      )}
+      <HeroNetwork interactive={enableHeavyFx} />
+      <HeroTransition />
 
       <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 md:px-10">
         <motion.span

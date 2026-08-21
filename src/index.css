@@ -127,6 +127,69 @@ button {
   animation: ambient-drift-alt 32s ease-in-out infinite;
 }
 
+@keyframes system-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes system-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.system-orbit {
+  animation: system-orbit 34s linear infinite;
+  will-change: transform;
+}
+
+.system-spin {
+  animation: system-spin 3s linear infinite;
+  will-change: transform;
+}
+
+@keyframes hero-data-travel {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateX(0);
+  }
+  12%,
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateX(76vw);
+  }
+}
+
+.hero-data-packet {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #55d6ff;
+  box-shadow: 0 0 16px rgba(85, 214, 255, 0.75);
+  transform: translate(-50%, -50%);
+  animation: hero-data-travel 7.5s linear infinite;
+  will-change: transform, opacity;
+}
+
+.hero-data-packet-two {
+  animation-delay: -3.75s;
+  background: #147dff;
+  box-shadow: 0 0 16px rgba(20, 125, 255, 0.75);
+}
+
+@media (min-width: 1024px) {
+  .systems-browser-grid {
+    grid-template-columns: 310px minmax(0, 1fr);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

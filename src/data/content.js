@@ -153,6 +153,6 @@ export const QUIZ_RESULTS = [
 ]
 
 export const CONTACT = {
-  whatsapp: '56900000000',
+  whatsapp: '56978696327',
   email: 'contacto@nabsolutions.dev',
 }

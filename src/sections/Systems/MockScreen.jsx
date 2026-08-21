@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const Bar = ({ w = 'w-full', h = 'h-2', className = '' }) => (
   <div className={`${w} ${h} rounded-full bg-white/10 ${className}`} />
 )
@@ -23,30 +25,93 @@ function TopBar({ title }) {
     <div className="flex items-center justify-between border-b border-white/5 px-5 py-3.5">
       <span className="font-sans text-xs font-medium text-white/60">{title}</span>
       <div className="flex items-center gap-2">
-        <div className="h-6 w-6 rounded-full bg-accent-blue/30" />
-        <Bar w="w-16" h="h-2" />
+        <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.45)]" />
+        <span className="hidden font-sans text-[10px] text-white/34 sm:inline">Sincronizado</span>
       </div>
     </div>
   )
 }
 
+const DASH_METRICS = [
+  {
+    label: 'Operaciones',
+    value: '128',
+    change: '+12%',
+    accent: 'text-cyan-300',
+    selected: 'border-cyan-300/30 bg-cyan-300/[0.07]',
+    bars: [38, 56, 34, 72, 52, 84, 46, 68, 61, 92],
+  },
+  {
+    label: 'Pendientes',
+    value: '42',
+    change: '-8%',
+    accent: 'text-amber-300',
+    selected: 'border-amber-300/30 bg-amber-300/[0.07]',
+    bars: [84, 76, 70, 65, 58, 52, 44, 38, 32, 25],
+  },
+  {
+    label: 'Cumplimiento',
+    value: '96%',
+    change: '+4%',
+    accent: 'text-emerald-300',
+    selected: 'border-emerald-300/30 bg-emerald-300/[0.07]',
+    bars: [58, 61, 66, 64, 72, 76, 82, 86, 90, 96],
+  },
+]
+
 function DashboardBody() {
+  const [activeMetric, setActiveMetric] = useState(0)
+  const metric = DASH_METRICS[activeMetric]
+
   return (
-    <div className="grid flex-1 grid-cols-3 gap-3 p-5">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="rounded-lg border border-white/5 bg-white/[0.03] p-3">
-          <Bar w="w-10" h="h-1.5" />
-          <div className="mt-2 font-display text-lg font-bold text-white/80">{[128, 42, 96][i]}</div>
-        </div>
+    <div className="grid flex-1 grid-cols-3 grid-rows-[auto_1fr] gap-3 overflow-hidden p-4 md:p-5">
+      {DASH_METRICS.map((item, index) => (
+        <button
+          key={item.label}
+          type="button"
+          onClick={() => setActiveMetric(index)}
+          className={`focus-ring rounded-lg border p-3 text-left transition-all duration-300 ${
+            activeMetric === index
+              ? item.selected
+              : 'border-white/[0.06] bg-white/[0.025] hover:border-white/15 hover:bg-white/[0.045]'
+          }`}
+        >
+          <div className="flex items-center justify-between gap-2">
+            <span className="truncate font-sans text-[10px] font-medium text-white/42">{item.label}</span>
+            <span className={`hidden font-sans text-[9px] font-bold sm:inline ${item.accent}`}>{item.change}</span>
+          </div>
+          <div className="mt-2 font-display text-lg font-bold text-white/88 md:text-xl">{item.value}</div>
+        </button>
       ))}
-      <div className="col-span-3 mt-1 flex h-32 items-end gap-1.5 rounded-lg border border-white/5 bg-white/[0.03] p-3">
-        {[40, 65, 30, 80, 55, 90, 45, 70, 60, 85].map((h, i) => (
-          <div
-            key={i}
-            className="flex-1 rounded-t bg-gradient-to-t from-accent-blue/60 to-accent-light/60"
-            style={{ height: `${h}%` }}
-          />
-        ))}
+
+      <div className="col-span-3 mt-1 flex min-h-0 flex-col rounded-lg border border-white/[0.06] bg-white/[0.025] p-3 md:p-4">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-white/34">Evolución</p>
+            <p className={`mt-1 font-sans text-xs font-semibold ${metric.accent}`}>{metric.label}</p>
+          </div>
+          <span className="font-sans text-[10px] text-white/28">Últimos 10 días</span>
+        </div>
+        <div className="mt-4 flex min-h-0 flex-1 items-end gap-1.5">
+          {metric.bars.map((height, index) => (
+            <div
+              key={index}
+              className="group relative flex h-full flex-1 items-end"
+              title={`${height}%`}
+            >
+              <div
+                className={`w-full rounded-t transition-[height,filter] duration-500 ease-premium group-hover:brightness-125 ${
+                  activeMetric === 1
+                    ? 'bg-gradient-to-t from-orange-500/55 to-amber-300/80'
+                    : activeMetric === 2
+                      ? 'bg-gradient-to-t from-teal-600/55 to-emerald-300/80'
+                      : 'bg-gradient-to-t from-blue-600/65 to-cyan-300/85'
+                }`}
+                style={{ height: `${height}%` }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -68,26 +133,35 @@ const STATUS_STYLE = {
 }
 
 function TableBody() {
+  const [selectedSku, setSelectedSku] = useState(INVENTORY_ROWS[0].sku)
+
   return (
-    <div className="flex-1 overflow-hidden p-5">
-      <div className="grid grid-cols-[1fr,2fr,1fr,1fr] gap-3 border-b border-white/10 pb-3 font-sans text-[11px] uppercase tracking-wide text-white/40">
+    <div className="flex-1 overflow-hidden p-4 md:p-5">
+      <div className="grid grid-cols-[0.9fr_1.8fr_0.7fr_1fr] gap-2 border-b border-white/10 pb-3 font-sans text-[10px] uppercase tracking-wide text-white/40 md:gap-3 md:text-[11px]">
         <span>SKU</span>
         <span>Producto</span>
         <span>Cantidad</span>
         <span>Estado</span>
       </div>
       {INVENTORY_ROWS.map((row) => (
-        <div
+        <button
           key={row.sku}
-          className="grid grid-cols-[1fr,2fr,1fr,1fr] items-center gap-3 border-b border-white/5 py-3 font-sans text-xs text-white/70"
+          type="button"
+          onClick={() => setSelectedSku(row.sku)}
+          className={`focus-ring relative grid w-full grid-cols-[0.9fr_1.8fr_0.7fr_1fr] items-center gap-2 border-b py-3 text-left font-sans text-[11px] transition-colors md:gap-3 md:text-xs ${
+            selectedSku === row.sku
+              ? 'border-accent-light/15 bg-accent-light/[0.055] text-white/88'
+              : 'border-white/5 text-white/68 hover:bg-white/[0.035]'
+          }`}
         >
+          {selectedSku === row.sku && <span className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-accent-light" />}
           <span className="text-white/40">{row.sku}</span>
           <span className="truncate">{row.name}</span>
           <span>{row.qty}</span>
           <span className={`w-fit rounded-full px-2 py-0.5 text-[10px] ${STATUS_STYLE[row.status]}`}>
             {row.status}
           </span>
-        </div>
+        </button>
       ))}
     </div>
   )
@@ -332,7 +406,7 @@ const BODIES = {
   enterprise: EnterpriseBody,
 }
 
-export default function MockScreen({ id, title }) {
+export default function MockScreen({ id, title, featured = false }) {
   if (id === 'movil') {
     return (
       <div className="mx-auto flex h-[420px] w-[220px] flex-col overflow-hidden rounded-[2rem] border-4 border-white/10 bg-base-900 shadow-[0_30px_80px_rgba(0,0,0,0.5)] md:h-[480px] md:w-[250px]">
@@ -360,7 +434,7 @@ export default function MockScreen({ id, title }) {
   const Body = BODIES[id] || DashboardBody
 
   return (
-    <div className="mx-auto flex h-[340px] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-base-900 shadow-[0_30px_80px_rgba(0,0,0,0.5)] md:h-[420px]">
+    <div className={`relative z-10 isolate mx-auto flex h-[360px] w-full flex-col overflow-hidden rounded-lg border border-white/10 bg-[#07111f] shadow-[0_30px_80px_rgba(0,0,0,0.5)] md:h-[480px] ${featured ? 'max-w-5xl' : 'max-w-3xl'}`}>
       <div className="flex h-9 shrink-0 items-center gap-1.5 border-b border-white/5 bg-white/[0.02] px-4">
         <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/10" />

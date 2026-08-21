@@ -1,32 +1,247 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import {
+  FiArrowLeft,
+  FiArrowRight,
+  FiBarChart2,
+  FiBox,
+  FiMapPin,
+  FiPieChart,
+  FiSmartphone,
+  FiUsers,
+} from 'react-icons/fi'
 import { SYSTEM_SCREENS } from '../../data/content'
 import RevealText from '../../components/RevealText'
 import MockScreen from './MockScreen'
 
-export default function Systems() {
-  return (
-    <section className="relative px-6 py-28 md:px-10 md:py-36">
-      <RevealText
-        as="h2"
-        text="Construimos herramientas que trabajan contigo."
-        className="mx-auto max-w-3xl text-balance text-center font-display text-big font-bold text-white"
-      />
+const SCREEN_DETAILS = {
+  dashboard: {
+    icon: FiBarChart2,
+    kicker: 'Decisiones en tiempo real',
+    description: 'Indicadores claros para entender qué está pasando y actuar a tiempo.',
+    color: 'text-cyan-300',
+    active: 'border-cyan-300/35 bg-cyan-300/[0.08] text-cyan-100',
+    tag: 'border-cyan-300/20 bg-cyan-300/[0.06] text-cyan-100/70',
+    line: 'from-cyan-300 via-sky-400 to-blue-500',
+    tags: ['Indicadores', 'Alertas', 'Tiempo real', 'Decisiones'],
+    background:
+      'radial-gradient(circle at 72% 42%, rgba(34,211,238,0.19), transparent 30%), radial-gradient(circle at 12% 80%, rgba(37,99,235,0.15), transparent 35%)',
+  },
+  inventario: {
+    icon: FiBox,
+    kicker: 'Stock siempre visible',
+    description: 'Productos, movimientos y alertas reunidos en una sola operación.',
+    color: 'text-amber-300',
+    active: 'border-amber-300/35 bg-amber-300/[0.08] text-amber-100',
+    tag: 'border-amber-300/20 bg-amber-300/[0.06] text-amber-100/70',
+    line: 'from-amber-300 via-orange-400 to-rose-400',
+    tags: ['Stock', 'Movimientos', 'Productos', 'Bodegas'],
+    background:
+      'radial-gradient(circle at 74% 40%, rgba(251,191,36,0.18), transparent 29%), radial-gradient(circle at 12% 80%, rgba(249,115,22,0.13), transparent 35%)',
+  },
+  personas: {
+    icon: FiUsers,
+    kicker: 'Equipos coordinados',
+    description: 'Información, responsabilidades y estados disponibles para cada persona.',
+    color: 'text-emerald-300',
+    active: 'border-emerald-300/35 bg-emerald-300/[0.08] text-emerald-100',
+    tag: 'border-emerald-300/20 bg-emerald-300/[0.06] text-emerald-100/70',
+    line: 'from-emerald-300 via-teal-400 to-cyan-400',
+    tags: ['Personas', 'Roles', 'Estados', 'Documentos'],
+    background:
+      'radial-gradient(circle at 72% 43%, rgba(52,211,153,0.18), transparent 30%), radial-gradient(circle at 14% 80%, rgba(20,184,166,0.13), transparent 35%)',
+  },
+  mapa: {
+    icon: FiMapPin,
+    kicker: 'Operación en terreno',
+    description: 'Ubicaciones, activos y estados representados en su contexto real.',
+    color: 'text-blue-300',
+    active: 'border-blue-300/35 bg-blue-300/[0.08] text-blue-100',
+    tag: 'border-blue-300/20 bg-blue-300/[0.06] text-blue-100/70',
+    line: 'from-blue-300 via-indigo-400 to-cyan-400',
+    tags: ['Mapa', 'Activos', 'Terreno', 'Estados'],
+    background:
+      'radial-gradient(circle at 73% 42%, rgba(96,165,250,0.19), transparent 30%), radial-gradient(circle at 13% 80%, rgba(79,70,229,0.13), transparent 35%)',
+  },
+  reportes: {
+    icon: FiPieChart,
+    kicker: 'Resultados que se entienden',
+    description: 'Reportes vivos que reemplazan horas de consolidación manual.',
+    color: 'text-rose-300',
+    active: 'border-rose-300/35 bg-rose-300/[0.08] text-rose-100',
+    tag: 'border-rose-300/20 bg-rose-300/[0.06] text-rose-100/70',
+    line: 'from-rose-300 via-pink-400 to-orange-300',
+    tags: ['Reportes', 'Tendencias', 'Exportación', 'Control'],
+    background:
+      'radial-gradient(circle at 74% 42%, rgba(251,113,133,0.18), transparent 30%), radial-gradient(circle at 13% 80%, rgba(244,114,182,0.12), transparent 35%)',
+  },
+  movil: {
+    icon: FiSmartphone,
+    kicker: 'Trabajo desde cualquier lugar',
+    description: 'La misma operación, adaptada a las personas que trabajan en movimiento.',
+    color: 'text-violet-300',
+    active: 'border-violet-300/35 bg-violet-300/[0.08] text-violet-100',
+    tag: 'border-violet-300/20 bg-violet-300/[0.06] text-violet-100/70',
+    line: 'from-violet-300 via-fuchsia-400 to-cyan-300',
+    tags: ['Móvil', 'Terreno', 'Sincronización', 'Acceso rápido'],
+    background:
+      'radial-gradient(circle at 73% 42%, rgba(167,139,250,0.19), transparent 30%), radial-gradient(circle at 13% 80%, rgba(217,70,239,0.11), transparent 35%)',
+  },
+}
 
-      <div className="mx-auto mt-14 grid max-w-5xl gap-x-10 gap-y-14 sm:grid-cols-2">
-        {SYSTEM_SCREENS.map((screen, i) => (
-          <motion.div
-            key={screen.id}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.35, delay: (i % 2) * 0.05, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <MockScreen id={screen.id} title={screen.label} />
-            <p className="mt-4 text-center font-sans text-sm uppercase tracking-[0.25em] text-accent-light/70">
-              {screen.label}
-            </p>
-          </motion.div>
-        ))}
+export default function Systems() {
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const activeScreen = SYSTEM_SCREENS[activeIndex]
+  const detail = SCREEN_DETAILS[activeScreen.id]
+
+  const showPrevious = () => {
+    setActiveIndex((current) => (current - 1 + SYSTEM_SCREENS.length) % SYSTEM_SCREENS.length)
+  }
+
+  const showNext = () => {
+    setActiveIndex((current) => (current + 1) % SYSTEM_SCREENS.length)
+  }
+
+  return (
+    <section id="proyectos" className="relative isolate overflow-hidden px-6 py-28 md:px-10 md:py-36">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeScreen.id}
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{ background: detail.background }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.55 }}
+          aria-hidden="true"
+        />
+      </AnimatePresence>
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid gap-6 lg:grid-cols-[1fr_0.82fr] lg:items-end">
+          <RevealText
+            as="h2"
+            text="Sistemas pensados para trabajar contigo."
+            className="max-w-3xl text-balance font-display text-big font-bold leading-tight text-white"
+          />
+          <p className="max-w-xl font-sans text-base leading-relaxed text-white/50 lg:justify-self-end">
+            Explora cómo una misma base tecnológica puede adaptarse a distintas áreas, equipos y
+            decisiones del mundo real.
+          </p>
+        </div>
+
+        <div className="systems-browser-grid mt-14 grid gap-10 lg:gap-12">
+          <div>
+            <div className="mb-4 flex items-center justify-between">
+              <p className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-white/38">
+                Soluciones
+              </p>
+              <span className="font-sans text-[10px] text-white/28">
+                {String(activeIndex + 1).padStart(2, '0')} / 06
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 lg:grid-cols-1" role="tablist" aria-label="Tipos de sistemas">
+              {SYSTEM_SCREENS.map((screen, index) => {
+                const item = SCREEN_DETAILS[screen.id]
+                const Icon = item.icon
+                const selected = index === activeIndex
+
+                return (
+                  <button
+                    key={screen.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={selected}
+                    onClick={() => setActiveIndex(index)}
+                    className={`focus-ring group grid min-h-[66px] grid-cols-[32px_1fr] items-center gap-3 rounded-md border px-3.5 text-left transition-all duration-300 lg:grid-cols-[32px_1fr_18px] ${
+                      selected
+                        ? item.active
+                        : 'border-white/[0.07] bg-black/10 text-white/48 hover:border-white/15 hover:bg-white/[0.04] hover:text-white/78'
+                    }`}
+                  >
+                    <span className={`grid h-8 w-8 place-items-center rounded-md bg-white/[0.045] ${selected ? item.color : 'text-white/34'}`}>
+                      <Icon size={15} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block font-sans text-[9px] uppercase tracking-[0.14em] opacity-50">
+                        Sistema {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span className="mt-1 block font-sans text-xs font-semibold leading-snug">
+                        {screen.label}
+                      </span>
+                    </span>
+                    <FiArrowRight className="hidden justify-self-end opacity-30 transition-transform group-hover:translate-x-0.5 lg:block" size={13} />
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="relative min-w-0">
+            <div className="pointer-events-none absolute -right-8 -top-24 hidden select-none font-display text-[13rem] font-extrabold leading-none text-white/[0.025] lg:block" aria-hidden="true">
+              {String(activeIndex + 1).padStart(2, '0')}
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeScreen.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
+                role="tabpanel"
+              >
+                <div className="relative mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className={`font-sans text-[11px] font-bold uppercase tracking-[0.22em] ${detail.color}`}>
+                      {detail.kicker}
+                    </p>
+                    <h3 className="mt-2 font-display text-2xl font-extrabold text-white md:text-3xl">
+                      {activeScreen.label}
+                    </h3>
+                    <p className="mt-2 max-w-xl font-sans text-sm leading-relaxed text-white/52">
+                      {detail.description}
+                    </p>
+                  </div>
+
+                  <div className="flex shrink-0 items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={showPrevious}
+                      className="focus-ring grid h-9 w-9 place-items-center rounded-md border border-white/10 text-white/50 transition-colors hover:border-white/20 hover:text-white"
+                      title="Sistema anterior"
+                      aria-label="Sistema anterior"
+                    >
+                      <FiArrowLeft size={15} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={showNext}
+                      className="focus-ring grid h-9 w-9 place-items-center rounded-md border border-white/10 text-white/50 transition-colors hover:border-white/20 hover:text-white"
+                      title="Sistema siguiente"
+                      aria-label="Sistema siguiente"
+                    >
+                      <FiArrowRight size={15} />
+                    </button>
+                  </div>
+                </div>
+
+                <div className={`h-px bg-gradient-to-r ${detail.line}`} />
+                <MockScreen id={activeScreen.id} title={activeScreen.label} featured />
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {detail.tags.map((tag) => (
+                    <span key={tag} className={`rounded-full border px-3 py-1 font-sans text-[10px] ${detail.tag}`}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
     </section>
   )
