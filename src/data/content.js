@@ -154,5 +154,5 @@ export const QUIZ_RESULTS = [
 
 export const CONTACT = {
   whatsapp: '56978696327',
-  email: 'contacto@nabsolutions.dev',
+  email: 'contacto@navsolutions.dev',
 }

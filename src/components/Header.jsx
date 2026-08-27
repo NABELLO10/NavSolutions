@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { NAV_LINKS } from '../data/content'
 import MagneticButton from './MagneticButton'
+import BrandLogo from './BrandLogo'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -25,9 +26,10 @@ export default function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
         <a
           href="#top"
-          className="font-display text-base font-extrabold tracking-tight text-white focus-ring"
+          className="focus-ring"
+          aria-label="NavSolutions"
         >
-          Nab<span className="text-accent-light">Solutions</span>
+          <BrandLogo />
         </a>
 
         <nav className="hidden items-center gap-9 md:flex">

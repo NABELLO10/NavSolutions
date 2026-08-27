@@ -4,6 +4,7 @@ import AmbientBackground from './components/AmbientBackground'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
+import ScrollToggleButton from './components/ScrollToggleButton'
 import Hero from './sections/Hero/Hero'
 import Story from './sections/Story/Story'
 import Problems from './sections/Problems/Problems'
@@ -73,6 +74,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <ScrollToggleButton />
       <WhatsAppButton />
     </div>
   )

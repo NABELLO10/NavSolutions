@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import BrandLogo from './BrandLogo'
 
 export default function Loader({ onDone }) {
   const [visible, setVisible] = useState(true)
@@ -18,27 +19,15 @@ export default function Loader({ onDone }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="overflow-hidden">
-            <motion.span
-              className="block font-display text-sm font-semibold tracking-[0.5em] text-white"
-              initial={{ y: '100%' }}
-              animate={{ y: '0%' }}
-              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            >
-              NAB
-            </motion.span>
-          </div>
-          <div className="mt-1 overflow-hidden">
-            <motion.span
-              className="block font-display text-sm font-semibold tracking-[0.5em] text-accent-light"
-              initial={{ y: '100%' }}
-              animate={{ y: '0%' }}
-              transition={{ duration: 0.24, delay: 0.02, ease: [0.16, 1, 0.3, 1] }}
-            >
-              SOLUTIONS
-            </motion.span>
-          </div>
-          <div className="mt-8 h-px w-32 overflow-hidden bg-white/10">
+          <motion.div
+            initial={{ scale: 0.88, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-8 flex w-full justify-center px-6"
+          >
+            <BrandLogo size="loader" />
+          </motion.div>
+          <div className="h-px w-40 overflow-hidden bg-white/10">
             <motion.div
               className="h-full w-full origin-left bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-light"
               initial={{ scaleX: 0 }}

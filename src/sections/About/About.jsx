@@ -21,7 +21,7 @@ export default function About() {
           transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col gap-5 font-sans text-lg leading-relaxed text-white/60"
         >
-          <p>NabSolutions nace de una idea simple:</p>
+          <p>NavSolutions nace de una idea simple:</p>
           <p className="font-display text-2xl font-semibold text-white">
             La tecnología debería resolver problemas, no crear nuevos.
           </p>
