@@ -33,7 +33,7 @@ jobs:
         env:
           # Si el sitio usa variables VITE_, agregalas aqui.
           # Recuerda: terminan dentro del bundle publico, no pongas secretos.
-          VITE_SITE_URL: https://navsolutions.duckdns.org
+          VITE_SITE_URL: https://navsolutions.cl
         run: npm run build
 
       - name: Verificar el build
