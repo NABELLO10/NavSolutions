@@ -29,7 +29,7 @@ export default function Hero({ ready, enableHeavyFx }) {
           transition={{ duration: 0.35, delay: 0.05 }}
           className="mb-4 inline-flex w-fit items-center gap-3 rounded-full border border-white/10 px-4 py-1.5 font-sans text-[11px] font-medium uppercase tracking-[0.25em] text-accent-light/90"
         >
-          Digital Solutions / Software / Automation
+          Digital Solutions / Software / Automatizaciones de procesos
         </motion.span>
 
         <AnimatedTitle
