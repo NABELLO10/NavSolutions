@@ -52,3 +52,28 @@ jobs:
           git commit -m "build desde ${GITHUB_SHA::7}"
           git push -f origin production
           echo "Publicado. El servidor lo tomara en los proximos 2 minutos."
+
+      - name: Configurar acceso SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$LIGHTSAIL_HOST" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Desplegar en AWS Lightsail
+        env:
+          LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
+          LIGHTSAIL_USER: ${{ secrets.LIGHTSAIL_USER }}
+        run: |
+          ssh "$LIGHTSAIL_USER@$LIGHTSAIL_HOST" '
+            set -e
+            cd /opt/apps/navsolutions/dist
+            git fetch origin production
+            git reset --hard origin/production
+            test -f dist/index.html
+            echo "Despliegue completado correctamente"
+          '
