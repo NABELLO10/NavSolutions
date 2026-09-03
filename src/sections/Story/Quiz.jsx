@@ -45,8 +45,8 @@ function ScoreRing({ score }) {
         />
         <defs>
           <linearGradient id="quizGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#147DFF" />
-            <stop offset="100%" stopColor="#55D6FF" />
+            <stop offset="0%" stopColor="#4DFF00" />
+            <stop offset="100%" stopColor="#D7FF2F" />
           </linearGradient>
         </defs>
       </svg>
@@ -88,7 +88,7 @@ export default function Quiz() {
   }
 
   return (
-    <div className="relative mx-auto mt-24 w-full max-w-2xl rounded-3xl border border-white/10 bg-white/[0.03] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-sm md:mt-32 md:p-12">
+    <div className="relative mx-auto mt-24 w-full max-w-2xl rounded-3xl border border-white/10 bg-white/[0.04] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.35)] md:mt-32 md:p-12">
       {!finished ? (
         <>
           <div className="mb-2 flex items-center justify-between">
@@ -101,7 +101,7 @@ export default function Quiz() {
           </div>
           <div className="mb-8 h-1.5 overflow-hidden rounded-full bg-white/10">
             <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-accent-blue to-accent-cyan"
+              className="h-full rounded-full bg-gradient-to-r from-green-700 to-lime-400"
               animate={{ width: `${(step / total) * 100}%` }}
               transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
             />
@@ -156,7 +156,8 @@ export default function Quiz() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <a
               href="#contacto"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent-blue to-accent-cyan px-7 py-3.5 font-sans text-sm font-semibold text-base-950 focus-ring"
+              className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-sans text-sm font-semibold text-base-950 focus-ring"
+              style={{ background: 'linear-gradient(90deg, #D7FF2F 0%, #4DFF00 54%, #00B93E 100%)' }}
             >
               Cuéntanos tu caso <span>→</span>
             </a>

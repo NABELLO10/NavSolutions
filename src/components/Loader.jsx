@@ -29,7 +29,7 @@ export default function Loader({ onDone }) {
           </motion.div>
           <div className="h-px w-40 overflow-hidden bg-white/10">
             <motion.div
-              className="h-full w-full origin-left bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-light"
+              className="h-full w-full origin-left bg-gradient-to-r from-green-700 via-green-500 to-lime-400"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, ease: 'linear' }}

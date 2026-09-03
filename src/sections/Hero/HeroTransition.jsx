@@ -1,7 +1,7 @@
 export default function HeroTransition() {
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-48 overflow-hidden" aria-hidden="true">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#08111c]/15 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#07140b]/20 to-transparent" />
 
       <svg
         className="absolute inset-x-0 bottom-2 h-32 w-full opacity-60"
@@ -10,11 +10,11 @@ export default function HeroTransition() {
       >
         <defs>
           <linearGradient id="transition-line" x1="0" x2="1">
-            <stop offset="0" stopColor="#55D6FF" stopOpacity="0" />
-            <stop offset="0.2" stopColor="#55D6FF" stopOpacity="0.26" />
-            <stop offset="0.5" stopColor="#147DFF" stopOpacity="0.42" />
-            <stop offset="0.8" stopColor="#55D6FF" stopOpacity="0.22" />
-            <stop offset="1" stopColor="#55D6FF" stopOpacity="0" />
+            <stop offset="0" stopColor="#D7FF2F" stopOpacity="0" />
+            <stop offset="0.2" stopColor="#D7FF2F" stopOpacity="0.22" />
+            <stop offset="0.5" stopColor="#4DFF00" stopOpacity="0.38" />
+            <stop offset="0.8" stopColor="#00D84A" stopOpacity="0.2" />
+            <stop offset="1" stopColor="#D7FF2F" stopOpacity="0" />
           </linearGradient>
         </defs>
         <path
@@ -32,9 +32,9 @@ export default function HeroTransition() {
           strokeWidth="0.7"
           vectorEffect="non-scaling-stroke"
         />
-        <circle cx="360" cy="64" r="2.2" fill="#55D6FF" fillOpacity="0.7" />
-        <circle cx="710" cy="72" r="2.2" fill="#147DFF" fillOpacity="0.8" />
-        <circle cx="930" cy="54" r="1.8" fill="#55D6FF" fillOpacity="0.65" />
+        <circle cx="360" cy="64" r="2.2" fill="#D7FF2F" fillOpacity="0.64" />
+        <circle cx="710" cy="72" r="2.2" fill="#4DFF00" fillOpacity="0.74" />
+        <circle cx="930" cy="54" r="1.8" fill="#00D84A" fillOpacity="0.58" />
       </svg>
 
       <div className="absolute bottom-[49px] left-[12%] right-[12%] h-px bg-gradient-to-r from-transparent via-accent-light/20 to-transparent">

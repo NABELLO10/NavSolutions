@@ -9,13 +9,13 @@ export default function Hero({ ready, enableHeavyFx }) {
   return (
     <section
       id="top"
-      className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden pt-20 pb-6"
+      className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden pb-6 pt-28 md:pt-32"
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
           background:
-            'linear-gradient(180deg, rgba(5,8,13,0.99) 0%, rgba(5,8,13,0.96) 58%, rgba(5,8,13,0.74) 78%, rgba(5,8,13,0.24) 94%, rgba(5,8,13,0) 100%)',
+            'linear-gradient(180deg, rgba(1,2,1,0.99) 0%, rgba(1,2,1,0.97) 58%, rgba(3,12,6,0.78) 78%, rgba(3,12,6,0.26) 94%, rgba(1,2,1,0) 100%)',
         }}
       />
       <HeroGrid />
@@ -58,7 +58,8 @@ export default function Hero({ ready, enableHeavyFx }) {
           <MagneticButton
             as="a"
             href="#contacto"
-            className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 font-sans text-sm font-semibold text-base-950 transition-transform focus-ring"
+            className="group inline-flex items-center gap-2 rounded-full px-7 py-4 font-sans text-sm font-semibold text-base-950 shadow-[0_0_24px_rgba(24,224,96,0.16)] transition-transform focus-ring"
+            style={{ background: 'linear-gradient(90deg, #D7FF2F 0%, #4DFF00 50%, #00B93E 100%)' }}
           >
             Cuéntanos tu idea
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>

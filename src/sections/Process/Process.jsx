@@ -13,7 +13,7 @@ export default function Process() {
         />
 
         <div className="relative pl-10 md:pl-14">
-          <div className="absolute left-0 top-1 h-full w-px bg-gradient-to-b from-accent-blue via-accent-cyan to-accent-light md:left-[7px]" />
+          <div className="absolute left-0 top-1 h-full w-px bg-gradient-to-b from-green-500 via-green-700 to-lime-400 md:left-[7px]" />
 
           <div className="flex flex-col gap-12">
             {PROCESS_STEPS.map((step, i) => (

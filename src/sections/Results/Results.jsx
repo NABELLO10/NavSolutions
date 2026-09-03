@@ -25,7 +25,8 @@ export default function Results() {
           >
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-accent-blue/15 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
+              className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{ background: 'radial-gradient(circle, rgba(77,255,0,0.14) 0%, rgba(77,255,0,0) 68%)' }}
             />
             <span className="relative font-display text-xs font-semibold tracking-[0.15em] text-accent-light/70">
               {String(i + 1).padStart(2, '0')}

@@ -37,8 +37,8 @@ const DASH_METRICS = [
     label: 'Operaciones',
     value: '128',
     change: '+12%',
-    accent: 'text-cyan-300',
-    selected: 'border-cyan-300/30 bg-cyan-300/[0.07]',
+    accent: 'text-lime-300',
+    selected: 'border-lime-300/30 bg-lime-300/[0.07]',
     bars: [38, 56, 34, 72, 52, 84, 46, 68, 61, 92],
   },
   {
@@ -104,8 +104,8 @@ function DashboardBody() {
                   activeMetric === 1
                     ? 'bg-gradient-to-t from-orange-500/55 to-amber-300/80'
                     : activeMetric === 2
-                      ? 'bg-gradient-to-t from-teal-600/55 to-emerald-300/80'
-                      : 'bg-gradient-to-t from-blue-600/65 to-cyan-300/85'
+                    ? 'bg-gradient-to-t from-green-800/60 to-emerald-400/72'
+                    : 'bg-gradient-to-t from-emerald-700/65 to-lime-300/85'
                 }`}
                 style={{ height: `${height}%` }}
               />
@@ -172,7 +172,7 @@ function PeopleBody() {
     <div className="grid flex-1 grid-cols-2 gap-3 p-5 md:grid-cols-3">
       {Array.from({ length: 6 }).map((_, i) => (
         <div key={i} className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.03] p-3">
-          <div className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-accent-blue/50 to-accent-cyan/30" />
+          <div className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-green-700/60 to-lime-400/25" />
           <div className="flex flex-1 flex-col gap-1.5">
             <Bar w="w-16" h="h-1.5" />
             <Bar w="w-10" h="h-1.5" className="opacity-40" />
@@ -190,7 +190,7 @@ function MapBody() {
         className="absolute inset-5 rounded-lg opacity-40"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(85,214,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(85,214,255,0.15) 1px, transparent 1px)',
+            'linear-gradient(rgba(24,224,96,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(24,224,96,0.1) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
         }}
       />
@@ -198,7 +198,7 @@ function MapBody() {
       {[[20, 30], [55, 60], [72, 25], [38, 72], [85, 55]].map(([x, y], i) => (
         <span
           key={i}
-          className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-light shadow-[0_0_16px_rgba(85,214,255,0.8)]"
+          className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-light shadow-[0_0_14px_rgba(141,255,69,0.5)]"
           style={{ left: `${x}%`, top: `${y}%` }}
         />
       ))}
@@ -214,7 +214,7 @@ function ReportsBody() {
           <polyline
             points="0,50 25,35 50,42 75,20 100,28 125,10 150,22 175,8 200,15"
             fill="none"
-            stroke="#55D6FF"
+            stroke="#D7FF2F"
             strokeWidth="2"
           />
         </svg>
@@ -254,7 +254,7 @@ function KanbanBody() {
             <div key={card} className="rounded-md border border-white/5 bg-base-900/80 p-2.5">
               <span className="font-sans text-[11px] leading-snug text-white/70">{card}</span>
               <div className="mt-2 flex items-center gap-1.5">
-                <div className="h-4 w-4 rounded-full bg-gradient-to-br from-accent-blue/60 to-accent-cyan/40" />
+                <div className="h-4 w-4 rounded-full bg-gradient-to-br from-green-700/70 to-lime-400/30" />
                 <Bar w="w-8" h="h-1" className="opacity-40" />
               </div>
             </div>
@@ -284,7 +284,7 @@ function ProgressBody() {
           </div>
           <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-accent-blue to-accent-cyan"
+              className="h-full rounded-full bg-gradient-to-r from-green-700 to-lime-400"
               style={{ width: `${w.pct}%` }}
             />
           </div>
@@ -321,7 +321,7 @@ function CalendarBody() {
               return (
                 <div
                   key={row}
-                  className={`h-5 rounded-md ${filled ? 'bg-gradient-to-r from-accent-blue/50 to-accent-cyan/30' : 'bg-white/[0.03]'}`}
+                  className={`h-5 rounded-md ${filled ? 'bg-gradient-to-r from-green-700/60 to-lime-400/25' : 'bg-white/[0.03]'}`}
                 />
               )
             })}
@@ -363,7 +363,7 @@ function EnterpriseBody() {
               key={r.user}
               className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 font-sans text-xs"
             >
-              <div className="h-6 w-6 shrink-0 rounded-full bg-gradient-to-br from-accent-blue/50 to-accent-cyan/30" />
+              <div className="h-6 w-6 shrink-0 rounded-full bg-gradient-to-br from-green-700/60 to-lime-400/25" />
               <span className="flex-1 truncate text-white/70">{r.user}</span>
               <span className="text-white/40">{r.role}</span>
               <span
@@ -434,7 +434,7 @@ export default function MockScreen({ id, title, featured = false }) {
   const Body = BODIES[id] || DashboardBody
 
   return (
-    <div className={`relative z-10 isolate mx-auto flex h-[360px] w-full flex-col overflow-hidden rounded-lg border border-white/10 bg-[#07111f] shadow-[0_30px_80px_rgba(0,0,0,0.5)] md:h-[480px] ${featured ? 'max-w-5xl' : 'max-w-3xl'}`}>
+    <div className={`relative z-10 isolate mx-auto flex h-[360px] w-full flex-col overflow-hidden rounded-lg border border-white/10 bg-[#07100b] shadow-[0_30px_80px_rgba(0,0,0,0.5)] md:h-[480px] ${featured ? 'max-w-5xl' : 'max-w-3xl'}`}>
       <div className="flex h-9 shrink-0 items-center gap-1.5 border-b border-white/5 bg-white/[0.02] px-4">
         <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/10" />

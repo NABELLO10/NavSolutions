@@ -30,7 +30,7 @@ export default function Contact() {
       <div
         className="pointer-events-none absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(20,125,255,0.16), transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(24,224,96,0.1), transparent 70%)',
         }}
       />
 
@@ -140,7 +140,8 @@ export default function Contact() {
         <MagneticButton
           as="button"
           type="submit"
-          className="group mt-2 inline-flex w-fit items-center gap-2 self-center rounded-full bg-white px-8 py-4 font-sans text-sm font-semibold text-base-950 focus-ring"
+          className="group mt-2 inline-flex w-fit items-center gap-2 self-center rounded-full px-8 py-4 font-sans text-sm font-semibold text-base-950 shadow-[0_0_24px_rgba(77,255,0,0.16)] focus-ring"
+          style={{ background: 'linear-gradient(90deg, #D7FF2F 0%, #4DFF00 50%, #00B93E 100%)' }}
         >
           Enviar proyecto
           <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>

@@ -1,27 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { NAV_LINKS } from '../data/content'
 import MagneticButton from './MagneticButton'
 import BrandLogo from './BrandLogo'
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled ? 'bg-base-950/80 backdrop-blur-md' : 'bg-transparent'
-      }`}
+      className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-base-950 shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
         <a

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Loader from './components/Loader'
 import AmbientBackground from './components/AmbientBackground'
 import Header from './components/Header'
@@ -19,7 +19,6 @@ import Contact from './sections/Contact/Contact'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
 import { useDeviceProfile } from './hooks/useDeviceProfile'
-import { ScrollTrigger } from './config/gsap'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
@@ -32,20 +31,14 @@ export default function App() {
 
   useSmoothScroll({ disabled: disableSmoothScroll })
 
-  useEffect(() => {
-    if (!loading) {
-      setReady(true)
-      const id = requestAnimationFrame(() => ScrollTrigger.refresh())
-      return () => cancelAnimationFrame(id)
-    }
-    return undefined
-  }, [loading])
-
   return (
     <div>
       <AmbientBackground lowPower={reducedMotion || isLowPower} />
 
-      <Loader onDone={() => setLoading(false)} />
+      <Loader onDone={() => {
+        setLoading(false)
+        setReady(true)
+      }} />
 
       <Header />
 

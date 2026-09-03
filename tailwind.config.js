@@ -5,14 +5,14 @@ export default {
     extend: {
       colors: {
         base: {
-          950: '#05080D',
-          900: '#07111F',
-          800: '#0A1628',
+          950: '#010201',
+          900: '#040806',
+          800: '#08110B',
         },
         accent: {
-          blue: '#147DFF',
-          cyan: '#00BFFF',
-          light: '#55D6FF',
+          blue: '#4DFF00',
+          cyan: '#00D84A',
+          light: '#D7FF2F',
         },
       },
       fontFamily: {

@@ -12,12 +12,29 @@
 
 html,
 body {
-  background: #05080d;
+  background: #010201;
   overscroll-behavior: none;
 }
 
-html.has-lenis {
-  scroll-behavior: auto;
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
 body {
@@ -34,8 +51,8 @@ body {
 }
 
 ::selection {
-  background: #147dff;
-  color: #05080d;
+  background: #18e060;
+  color: #010201;
 }
 
 a {
@@ -65,7 +82,7 @@ button {
 }
 
 .text-gradient {
-  background: linear-gradient(120deg, #eef3fa 30%, #55d6ff 70%, #147dff 100%);
+  background: linear-gradient(120deg, #f4fff7 18%, #8dff45 58%, #18e060 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -78,19 +95,7 @@ button {
      measured ~40% of this layer's entire scroll-perf cost was that one
      property. A flat semi-transparent grain reads almost identically. */
   pointer-events: none;
-  position: absolute;
-  inset: 0;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Skips layout/paint work for offscreen sections on long scroll pages.
-   Only applied to sections whose reveal animation is a plain
-   IntersectionObserver (whileInView), never to the ones driven by a
-   scroll-progress mapped to their own container size. */
-.cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
+  display: none;
 }
 
 .focus-ring:focus-visible {
@@ -125,6 +130,13 @@ button {
 
 .ambient-drift-alt {
   animation: ambient-drift-alt 32s ease-in-out infinite;
+}
+
+.is-scrolling .ambient-drift,
+.is-scrolling .ambient-drift-alt,
+.is-scrolling .hero-data-packet,
+.is-scrolling .animate-pulse {
+  animation-play-state: paused !important;
 }
 
 @keyframes system-orbit {
@@ -171,8 +183,8 @@ button {
   width: 5px;
   height: 5px;
   border-radius: 999px;
-  background: #55d6ff;
-  box-shadow: 0 0 16px rgba(85, 214, 255, 0.75);
+  background: #18e060;
+  box-shadow: 0 0 16px rgba(24, 224, 96, 0.58);
   transform: translate(-50%, -50%);
   animation: hero-data-travel 7.5s linear infinite;
   will-change: transform, opacity;
@@ -180,8 +192,8 @@ button {
 
 .hero-data-packet-two {
   animation-delay: -3.75s;
-  background: #147dff;
-  box-shadow: 0 0 16px rgba(20, 125, 255, 0.75);
+  background: #8dff45;
+  box-shadow: 0 0 16px rgba(141, 255, 69, 0.52);
 }
 
 @media (min-width: 1024px) {

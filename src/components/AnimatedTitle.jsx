@@ -8,11 +8,10 @@ const container = {
 }
 
 const word = {
-  hidden: { yPercent: 115, opacity: 0, filter: 'blur(10px)' },
+  hidden: { yPercent: 115, opacity: 0 },
   show: {
     yPercent: 0,
     opacity: 1,
-    filter: 'blur(0px)',
     transition: { duration: 0.42, ease: [0.16, 1, 0.3, 1] },
   },
 }

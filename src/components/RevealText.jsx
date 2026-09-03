@@ -1,8 +1,7 @@
-import { useLayoutEffect, useRef } from 'react'
-import { gsap, ScrollTrigger, setupGsap } from '../config/gsap'
+import { useEffect, useRef, useState } from 'react'
 
 // Splits text into words, each masked inside overflow-hidden spans,
-// and reveals them with a staggered blur + translate on scroll.
+// and reveals them with a staggered translate on scroll.
 export default function RevealText({
   text,
   parts,
@@ -14,41 +13,33 @@ export default function RevealText({
   once = true,
 }) {
   const containerRef = useRef(null)
+  const [visible, setVisible] = useState(false)
   const segments = parts
     ? parts.flatMap((part) =>
         part.text.split(' ').map((word) => ({ word, className: part.className || '' }))
       )
     : text.split(' ').map((word) => ({ word, className: '' }))
 
-  useLayoutEffect(() => {
-    setupGsap()
+  useEffect(() => {
     const el = containerRef.current
     if (!el) return undefined
 
-    const targets = el.querySelectorAll('.reveal-word-inner')
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        targets,
-        { yPercent: 110, opacity: 0, filter: 'blur(8px)' },
-        {
-          yPercent: 0,
-          opacity: 1,
-          filter: 'blur(0px)',
-          duration: 0.4,
-          ease: 'power3.out',
-          stagger,
-          scrollTrigger: {
-            trigger: el,
-            start,
-            once,
-          },
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          if (once) observer.disconnect()
+          return
         }
-      )
-    }, el)
 
-    return () => ctx.revert()
-  }, [stagger, start, once])
+        if (!once) setVisible(false)
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 }
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [once, start])
 
   return (
     <Tag ref={containerRef} className={className}>
@@ -59,7 +50,15 @@ export default function RevealText({
             i < segments.length - 1 ? 'mr-[0.28em]' : ''
           } ${wordClassName}`}
         >
-          <span className={`reveal-word-inner inline-block will-change-transform ${seg.className}`}>
+          <span
+            className={`inline-block will-change-transform ${seg.className}`}
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translate3d(0, 0, 0)' : 'translate3d(0, 110%, 0)',
+              transition: 'opacity 420ms cubic-bezier(0.16, 1, 0.3, 1), transform 420ms cubic-bezier(0.16, 1, 0.3, 1)',
+              transitionDelay: `${i * stagger}s`,
+            }}
+          >
             {seg.word}
             {i < segments.length - 1 ? ' ' : ''}
           </span>

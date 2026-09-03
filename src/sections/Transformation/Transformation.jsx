@@ -22,7 +22,10 @@ export default function Transformation() {
               transition={{ duration: 0.35, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-8"
             >
-              <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent-blue/10 blur-3xl transition-transform duration-300 ease-premium group-hover:scale-150" />
+              <div
+                className="absolute -right-10 -top-10 h-40 w-40 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{ background: 'radial-gradient(circle, rgba(77,255,0,0.12) 0%, rgba(77,255,0,0) 68%)' }}
+              />
               <span className="relative font-sans text-xs uppercase tracking-[0.3em] text-accent-light/70">
                 0{i + 1}
               </span>

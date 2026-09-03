@@ -26,7 +26,7 @@ export default function HeroNetwork({ interactive = true }) {
     }
 
     const createNodes = () => {
-      const count = width < 640 ? 34 : clamp(Math.round(width / 22), 46, 82)
+      const count = width < 640 ? 24 : clamp(Math.round(width / 34), 34, 50)
       nodes = Array.from({ length: count }, (_, index) => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -91,11 +91,15 @@ export default function HeroNetwork({ interactive = true }) {
       context.lineTo(node.x - size, node.y)
       context.lineTo(node.x - size * 0.28, node.y - size * 0.28)
       context.closePath()
-      context.fillStyle = `rgba(215, 244, 255, ${opacity})`
+      context.fillStyle = `rgba(210, 255, 160, ${opacity})`
       context.fill()
     }
 
     const render = (time = 0) => {
+      if (document.documentElement.classList.contains('is-scrolling')) {
+        return
+      }
+
       context.clearRect(0, 0, width, height)
       pointer.x += (pointer.targetX - pointer.x) * 0.075
       pointer.y += (pointer.targetY - pointer.y) * 0.075
@@ -139,7 +143,7 @@ export default function HeroNetwork({ interactive = true }) {
           context.beginPath()
           context.moveTo(nodes[first].x, nodes[first].y)
           context.lineTo(nodes[second].x, nodes[second].y)
-          context.strokeStyle = `rgba(85, 214, 255, ${opacity})`
+          context.strokeStyle = `rgba(24, 224, 96, ${opacity})`
           context.lineWidth = 0.7
           context.stroke()
         }
@@ -154,14 +158,14 @@ export default function HeroNetwork({ interactive = true }) {
           context.beginPath()
           context.moveTo(pointer.x, pointer.y)
           context.lineTo(node.x, node.y)
-          context.strokeStyle = `rgba(20, 125, 255, ${opacity})`
+          context.strokeStyle = `rgba(15, 184, 79, ${opacity})`
           context.lineWidth = 0.9
           context.stroke()
         })
 
         const glow = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 130)
-        glow.addColorStop(0, 'rgba(85, 214, 255, 0.09)')
-        glow.addColorStop(1, 'rgba(20, 125, 255, 0)')
+        glow.addColorStop(0, 'rgba(141, 255, 69, 0.06)')
+        glow.addColorStop(1, 'rgba(24, 224, 96, 0)')
         context.fillStyle = glow
         context.fillRect(pointer.x - 130, pointer.y - 130, 260, 260)
       }
@@ -175,18 +179,28 @@ export default function HeroNetwork({ interactive = true }) {
 
         context.beginPath()
         context.arc(node.x, node.y, node.radius, 0, Math.PI * 2)
-        context.fillStyle = `rgba(185, 232, 255, ${twinkle})`
+        context.fillStyle = `rgba(176, 255, 174, ${twinkle})`
         context.fill()
       })
 
       if (pointer.active) {
         context.beginPath()
         context.arc(pointer.x, pointer.y, 3.2, 0, Math.PI * 2)
-        context.fillStyle = 'rgba(85, 214, 255, 0.95)'
+        context.fillStyle = 'rgba(141, 255, 69, 0.88)'
         context.fill()
       }
 
       if (visible && interactive) frame = requestAnimationFrame(render)
+    }
+
+    const pauseForScroll = () => {
+      cancelAnimationFrame(frame)
+      frame = 0
+    }
+
+    const resumeAfterScroll = () => {
+      if (!visible || frame) return
+      frame = requestAnimationFrame(render)
     }
 
     const resizeObserver = new ResizeObserver(() => {
@@ -203,6 +217,8 @@ export default function HeroNetwork({ interactive = true }) {
     visibilityObserver.observe(host)
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     window.addEventListener('pointerleave', handlePointerLeave)
+    window.addEventListener('nav-scroll-start', pauseForScroll)
+    window.addEventListener('nav-scroll-stop', resumeAfterScroll)
     resize()
     render()
 
@@ -212,6 +228,8 @@ export default function HeroNetwork({ interactive = true }) {
       visibilityObserver.disconnect()
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerleave', handlePointerLeave)
+      window.removeEventListener('nav-scroll-start', pauseForScroll)
+      window.removeEventListener('nav-scroll-stop', resumeAfterScroll)
     }
   }, [interactive])
 

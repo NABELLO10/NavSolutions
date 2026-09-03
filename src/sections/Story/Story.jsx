@@ -22,9 +22,18 @@ export default function Story() {
   return (
     <section className="relative overflow-hidden px-6 py-28 md:px-10 md:py-36">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="ambient-drift absolute left-[6%] top-[8%] h-72 w-72 rounded-full bg-accent-blue/15 blur-[100px]" />
-        <div className="ambient-drift-alt absolute right-[8%] top-[45%] h-80 w-80 rounded-full bg-accent-cyan/10 blur-[110px]" />
-        <div className="ambient-drift absolute bottom-[4%] left-[30%] h-64 w-64 rounded-full bg-accent-light/10 blur-[100px]" />
+        <div
+          className="ambient-drift absolute left-[6%] top-[8%] h-72 w-72 rounded-full opacity-70"
+          style={{ background: 'radial-gradient(circle, rgba(24,224,96,0.12) 0%, rgba(24,224,96,0) 70%)' }}
+        />
+        <div
+          className="ambient-drift-alt absolute right-[8%] top-[45%] h-80 w-80 rounded-full opacity-70"
+          style={{ background: 'radial-gradient(circle, rgba(15,184,79,0.1) 0%, rgba(15,184,79,0) 70%)' }}
+        />
+        <div
+          className="ambient-drift absolute bottom-[4%] left-[30%] h-64 w-64 rounded-full opacity-60"
+          style={{ background: 'radial-gradient(circle, rgba(141,255,69,0.08) 0%, rgba(141,255,69,0) 70%)' }}
+        />
       </div>
 
       <div className="relative mx-auto flex max-w-4xl flex-col gap-14 text-center md:gap-20">

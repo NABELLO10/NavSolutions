@@ -1,5 +1,5 @@
-import { useRef } from 'react'
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import MagneticButton from '../../components/MagneticButton'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 
@@ -10,23 +10,48 @@ const PHRASES = [
 
 export default function KeySection() {
   const sectionRef = useRef(null)
+  const lastPhraseRef = useRef(0)
+  const [phraseState, setPhraseState] = useState({ index: 0, direction: 1 })
   const reducedMotion = usePrefersReducedMotion()
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start 0.75', 'end 0.4'],
-  })
-  const progress = useSpring(scrollYProgress, { stiffness: 220, damping: 32, mass: 0.3 })
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el || reducedMotion) return undefined
 
-  const opacityA = useTransform(progress, [0, 0.46, 0.5], [1, 1, 0])
-  const scaleA = useTransform(progress, [0.38, 0.5], [1, 0.96])
-  const blurA = useTransform(progress, [0.38, 0.5], [0, 4])
-  const filterA = useTransform(blurA, (v) => `blur(${v}px)`)
+    let frame = 0
 
-  const opacityB = useTransform(progress, [0.5, 0.54, 1], [0, 1, 1])
-  const scaleB = useTransform(progress, [0.5, 0.62], [1.04, 1])
-  const blurB = useTransform(progress, [0.5, 0.62], [4, 0])
-  const filterB = useTransform(blurB, (v) => `blur(${v}px)`)
+    const updatePhrase = () => {
+      frame = 0
+      const rect = el.getBoundingClientRect()
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight
+      const triggerLine = viewportHeight * 0.52
+      const switchPoint = rect.top + rect.height * 0.46
+      const nextIndex = switchPoint <= triggerLine ? 1 : 0
+      const previousIndex = lastPhraseRef.current
+
+      if (nextIndex === previousIndex) return
+
+      lastPhraseRef.current = nextIndex
+      setPhraseState({
+        index: nextIndex,
+        direction: nextIndex > previousIndex ? 1 : -1,
+      })
+    }
+
+    const requestUpdate = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(updatePhrase)
+    }
+
+    updatePhrase()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+    }
+  }, [reducedMotion])
 
   return (
     <section
@@ -51,20 +76,34 @@ export default function KeySection() {
             </p>
           </div>
         ) : (
-          <>
+          <AnimatePresence mode="wait" custom={phraseState.direction}>
             <motion.p
-              style={{ opacity: opacityA, scale: scaleA, filter: filterA }}
+              key={phraseState.index}
+              custom={phraseState.direction}
+              initial={(direction) => ({
+                opacity: 0,
+                y: direction > 0 ? 24 : -24,
+                scale: 0.985,
+                filter: 'blur(8px)',
+              })}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: 'blur(0px)',
+              }}
+              exit={(direction) => ({
+                opacity: 0,
+                y: direction > 0 ? -24 : 24,
+                scale: 0.985,
+                filter: 'blur(8px)',
+              })}
+              transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0 flex items-center justify-center text-balance font-display text-giant font-extrabold leading-tight text-white"
             >
-              {PHRASES[0]}
+              {PHRASES[phraseState.index]}
             </motion.p>
-            <motion.p
-              style={{ opacity: opacityB, scale: scaleB, filter: filterB }}
-              className="absolute inset-0 flex items-center justify-center text-balance font-display text-giant font-extrabold leading-tight text-white"
-            >
-              {PHRASES[1]}
-            </motion.p>
-          </>
+          </AnimatePresence>
         )}
       </div>
 
@@ -78,7 +117,8 @@ export default function KeySection() {
         <MagneticButton
           as="a"
           href="#contacto"
-          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent-blue to-accent-cyan px-8 py-4 font-sans text-sm font-semibold text-base-950 focus-ring"
+          className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-sans text-sm font-semibold text-base-950 focus-ring"
+          style={{ background: 'linear-gradient(90deg, #D7FF2F 0%, #4DFF00 54%, #00B93E 100%)' }}
         >
           Hablemos <span>→</span>
         </MagneticButton>
