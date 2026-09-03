@@ -96,10 +96,6 @@ export default function HeroNetwork({ interactive = true }) {
     }
 
     const render = (time = 0) => {
-      if (document.documentElement.classList.contains('is-scrolling')) {
-        return
-      }
-
       context.clearRect(0, 0, width, height)
       pointer.x += (pointer.targetX - pointer.x) * 0.075
       pointer.y += (pointer.targetY - pointer.y) * 0.075
@@ -193,16 +189,6 @@ export default function HeroNetwork({ interactive = true }) {
       if (visible && interactive) frame = requestAnimationFrame(render)
     }
 
-    const pauseForScroll = () => {
-      cancelAnimationFrame(frame)
-      frame = 0
-    }
-
-    const resumeAfterScroll = () => {
-      if (!visible || frame) return
-      frame = requestAnimationFrame(render)
-    }
-
     const resizeObserver = new ResizeObserver(() => {
       resize()
       if (!interactive) render()
@@ -217,8 +203,6 @@ export default function HeroNetwork({ interactive = true }) {
     visibilityObserver.observe(host)
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     window.addEventListener('pointerleave', handlePointerLeave)
-    window.addEventListener('nav-scroll-start', pauseForScroll)
-    window.addEventListener('nav-scroll-stop', resumeAfterScroll)
     resize()
     render()
 
@@ -228,8 +212,6 @@ export default function HeroNetwork({ interactive = true }) {
       visibilityObserver.disconnect()
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerleave', handlePointerLeave)
-      window.removeEventListener('nav-scroll-start', pauseForScroll)
-      window.removeEventListener('nav-scroll-stop', resumeAfterScroll)
     }
   }, [interactive])
 
