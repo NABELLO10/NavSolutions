@@ -37,7 +37,7 @@ export function BrandMark({ className = 'h-9 w-9' }) {
   )
 }
 
-export default function BrandLogo({ compact = false, size = 'default', className = '' }) {
+export default function BrandLogo({ compact = false, size = 'default', compactBar = false, className = '' }) {
   if (compact) {
     return (
       <span className={`group/logo relative inline-flex ${className}`} aria-label="NAV Solutions">
@@ -48,23 +48,33 @@ export default function BrandLogo({ compact = false, size = 'default', className
     )
   }
 
-  const markClass =
-    size === 'loader'
-      ? 'h-16 w-16 shrink-0 sm:h-20 sm:w-20'
-      : 'h-11 w-11 shrink-0 sm:h-12 sm:w-12'
-  const nameClass =
-    size === 'loader'
-      ? 'font-display text-3xl font-extrabold tracking-normal text-white sm:text-4xl'
-      : 'font-display text-xl font-extrabold tracking-normal text-white sm:text-2xl'
-  const taglineClass =
-    size === 'loader'
-      ? 'mt-2 font-sans text-[10px] font-medium tracking-[0.16em] text-white/45 sm:text-xs'
-      : 'mt-1 hidden font-sans text-[9px] font-medium tracking-[0.16em] text-white/45 sm:block'
+  const isLoader = size === 'loader'
+  const isFooter = size === 'footer'
+
+  // The header shrinks its own padding on scroll; the mark and wordmark
+  // have to shrink with it or the bar stops looking deliberate.
+  const markClass = isLoader
+    ? 'h-14 w-14 shrink-0 xs:h-16 xs:w-16 sm:h-20 sm:w-20'
+    : `shrink-0 transition-[height,width] duration-300 ease-premium ${
+        compactBar ? 'h-9 w-9 sm:h-10 sm:w-10' : 'h-10 w-10 sm:h-11 sm:w-11 lg:h-12 lg:w-12'
+      }`
+
+  const nameClass = isLoader
+    ? 'font-display text-2xl font-extrabold tracking-normal text-white xs:text-3xl sm:text-4xl'
+    : `font-display font-extrabold tracking-normal text-white transition-[font-size] duration-300 ease-premium ${
+        compactBar ? 'text-lg sm:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
+      }`
+
+  const taglineClass = isLoader
+    ? 'mt-2 font-sans text-[10px] font-medium tracking-[0.16em] text-white/45 sm:text-xs'
+    : `mt-1 font-sans text-[9px] font-medium tracking-[0.16em] text-white/45 transition-opacity duration-300 ${
+        isFooter ? 'hidden sm:block' : compactBar ? 'hidden' : 'hidden lg:block'
+      }`
 
   return (
-    <span className={`group/logo relative inline-flex items-center gap-3 ${className}`}>
+    <span className={`group/logo relative inline-flex shrink-0 items-center gap-2.5 sm:gap-3 ${className}`}>
       <BrandMark className={markClass} />
-      <span className="flex flex-col leading-none">
+      <span className="flex min-w-0 flex-col leading-none">
         <span className={nameClass}>
           NAV<span style={{ color: '#4DFF00' }}>Solutions</span>
         </span>

@@ -2,7 +2,12 @@ import { useEffect, useRef } from 'react'
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 
-export default function HeroNetwork({ interactive = true }) {
+// `interactive` = pointer-tracked physics (desktop only).
+// `animated`    = the drift + twinkle loop, which phones can run fine
+//                 as long as it's throttled and node-light. Splitting
+//                 the two is what keeps the hero alive on mobile
+//                 instead of freezing it on a single static frame.
+export default function HeroNetwork({ interactive = true, animated = true }) {
   const canvasRef = useRef(null)
 
   useEffect(() => {
@@ -25,8 +30,17 @@ export default function HeroNetwork({ interactive = true }) {
       targetY: 0,
     }
 
+    // Fewer nodes when we're not pointer-interactive: the O(n^2)
+    // link pass is the expensive part, and a phone gets the same
+    // visual density from a smaller field on a smaller canvas.
     const createNodes = () => {
-      const count = width < 640 ? 24 : clamp(Math.round(width / 34), 34, 50)
+      const count = interactive
+        ? width < 640
+          ? 24
+          : clamp(Math.round(width / 34), 34, 50)
+        : width < 640
+        ? 18
+        : clamp(Math.round(width / 46), 22, 32)
       nodes = Array.from({ length: count }, (_, index) => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -95,7 +109,18 @@ export default function HeroNetwork({ interactive = true }) {
       context.fill()
     }
 
+    // Phones run the loop at ~32fps. The drift is slow enough that the
+    // lower cadence is invisible, and it roughly halves the canvas cost.
+    const frameBudget = interactive ? 0 : 1000 / 32
+    let lastPaint = -Infinity
+
     const render = (time = 0) => {
+      if (frameBudget && time - lastPaint < frameBudget) {
+        if (visible && animated) frame = requestAnimationFrame(render)
+        return
+      }
+      lastPaint = time
+
       context.clearRect(0, 0, width, height)
       pointer.x += (pointer.targetX - pointer.x) * 0.075
       pointer.y += (pointer.targetY - pointer.y) * 0.075
@@ -104,7 +129,7 @@ export default function HeroNetwork({ interactive = true }) {
       const pointerDistance = width < 640 ? 150 : 220
 
       nodes.forEach((node) => {
-        if (interactive) {
+        if (animated) {
           node.x += node.vx
           node.y += node.vy
 
@@ -186,23 +211,25 @@ export default function HeroNetwork({ interactive = true }) {
         context.fill()
       }
 
-      if (visible && interactive) frame = requestAnimationFrame(render)
+      if (visible && animated) frame = requestAnimationFrame(render)
     }
 
     const resizeObserver = new ResizeObserver(() => {
       resize()
-      if (!interactive) render()
+      if (!animated) render()
     })
     const visibilityObserver = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting
       cancelAnimationFrame(frame)
-      if (visible) frame = requestAnimationFrame(render)
+      if (visible && animated) frame = requestAnimationFrame(render)
     })
 
     resizeObserver.observe(host)
     visibilityObserver.observe(host)
-    window.addEventListener('pointermove', handlePointerMove, { passive: true })
-    window.addEventListener('pointerleave', handlePointerLeave)
+    if (interactive) {
+      window.addEventListener('pointermove', handlePointerMove, { passive: true })
+      window.addEventListener('pointerleave', handlePointerLeave)
+    }
     resize()
     render()
 
@@ -213,12 +240,12 @@ export default function HeroNetwork({ interactive = true }) {
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerleave', handlePointerLeave)
     }
-  }, [interactive])
+  }, [interactive, animated])
 
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none absolute inset-0 h-full w-full opacity-80"
+      className="pointer-events-none absolute inset-0 h-full w-full opacity-70 sm:opacity-80"
       style={{
         maskImage: 'linear-gradient(to bottom, black 0%, black 76%, transparent 100%)',
         WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 76%, transparent 100%)',

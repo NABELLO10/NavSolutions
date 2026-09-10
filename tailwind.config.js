@@ -2,6 +2,16 @@
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
+    // Declared in full (not via `extend`) so `xs` lands in ascending
+    // order with the defaults instead of being appended after `2xl`.
+    screens: {
+      xs: '400px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         base: {
@@ -20,9 +30,12 @@ export default {
         sans: ['Inter', 'Manrope', 'sans-serif'],
       },
       fontSize: {
-        'hero': 'clamp(2rem, 4.5vw, 3.75rem)',
-        'giant': 'clamp(1.875rem, 4.5vw, 3.25rem)',
-        'big': 'clamp(1.625rem, 3.5vw, 2.5rem)',
+        // Fluid ramps: the small end is tuned for a 320px phone, the
+        // large end for a 1920px desktop, so no breakpoint jumps.
+        hero: 'clamp(1.875rem, 7.2vw, 3.75rem)',
+        giant: 'clamp(1.625rem, 6vw, 3.25rem)',
+        big: 'clamp(1.5rem, 5vw, 2.5rem)',
+        section: 'clamp(1.375rem, 4.2vw, 2rem)',
       },
       transitionTimingFunction: {
         premium: 'cubic-bezier(0.16, 1, 0.3, 1)',

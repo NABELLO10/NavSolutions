@@ -22,8 +22,8 @@ function Sidebar() {
 
 function TopBar({ title }) {
   return (
-    <div className="flex items-center justify-between border-b border-white/5 px-5 py-3.5">
-      <span className="font-sans text-xs font-medium text-white/60">{title}</span>
+    <div className="flex items-center justify-between gap-3 border-b border-white/5 px-4 py-3 sm:px-5 sm:py-3.5">
+      <span className="truncate font-sans text-[11px] font-medium text-white/60 sm:text-xs">{title}</span>
       <div className="flex items-center gap-2">
         <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.45)]" />
         <span className="hidden font-sans text-[10px] text-white/34 sm:inline">Sincronizado</span>
@@ -64,35 +64,35 @@ function DashboardBody() {
   const metric = DASH_METRICS[activeMetric]
 
   return (
-    <div className="grid flex-1 grid-cols-3 grid-rows-[auto_1fr] gap-3 overflow-hidden p-4 md:p-5">
+    <div className="grid flex-1 grid-cols-3 grid-rows-[auto_1fr] gap-2 overflow-hidden p-3 sm:gap-3 sm:p-4 md:p-5">
       {DASH_METRICS.map((item, index) => (
         <button
           key={item.label}
           type="button"
           onClick={() => setActiveMetric(index)}
-          className={`focus-ring rounded-lg border p-3 text-left transition-all duration-300 ${
+          className={`focus-ring rounded-lg border p-2.5 text-left transition-all duration-300 active:scale-[0.97] sm:p-3 ${
             activeMetric === index
               ? item.selected
               : 'border-white/[0.06] bg-white/[0.025] hover:border-white/15 hover:bg-white/[0.045]'
           }`}
         >
           <div className="flex items-center justify-between gap-2">
-            <span className="truncate font-sans text-[10px] font-medium text-white/42">{item.label}</span>
+            <span className="truncate font-sans text-[9px] font-medium text-white/42 sm:text-[10px]">{item.label}</span>
             <span className={`hidden font-sans text-[9px] font-bold sm:inline ${item.accent}`}>{item.change}</span>
           </div>
-          <div className="mt-2 font-display text-lg font-bold text-white/88 md:text-xl">{item.value}</div>
+          <div className="mt-1.5 font-display text-base font-bold text-white/88 sm:mt-2 sm:text-lg md:text-xl">{item.value}</div>
         </button>
       ))}
 
-      <div className="col-span-3 mt-1 flex min-h-0 flex-col rounded-lg border border-white/[0.06] bg-white/[0.025] p-3 md:p-4">
+      <div className="col-span-3 flex min-h-0 flex-col rounded-lg border border-white/[0.06] bg-white/[0.025] p-2.5 sm:mt-1 sm:p-3 md:p-4">
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-white/34">Evolución</p>
             <p className={`mt-1 font-sans text-xs font-semibold ${metric.accent}`}>{metric.label}</p>
           </div>
-          <span className="font-sans text-[10px] text-white/28">Últimos 10 días</span>
+          <span className="hidden shrink-0 font-sans text-[10px] text-white/28 xs:inline">Últimos 10 días</span>
         </div>
-        <div className="mt-4 flex min-h-0 flex-1 items-end gap-1.5">
+        <div className="mt-3 flex min-h-0 flex-1 items-end gap-1 sm:mt-4 sm:gap-1.5">
           {metric.bars.map((height, index) => (
             <div
               key={index}
@@ -136,11 +136,11 @@ function TableBody() {
   const [selectedSku, setSelectedSku] = useState(INVENTORY_ROWS[0].sku)
 
   return (
-    <div className="flex-1 overflow-hidden p-4 md:p-5">
-      <div className="grid grid-cols-[0.9fr_1.8fr_0.7fr_1fr] gap-2 border-b border-white/10 pb-3 font-sans text-[10px] uppercase tracking-wide text-white/40 md:gap-3 md:text-[11px]">
-        <span>SKU</span>
+    <div className="flex-1 overflow-hidden p-3 sm:p-4 md:p-5">
+      <div className="grid grid-cols-[1.8fr_0.6fr_1fr] gap-2 border-b border-white/10 pb-3 font-sans text-[10px] uppercase tracking-wide text-white/40 sm:grid-cols-[0.9fr_1.8fr_0.7fr_1fr] md:gap-3 md:text-[11px]">
+        <span className="hidden sm:inline">SKU</span>
         <span>Producto</span>
-        <span>Cantidad</span>
+        <span>Cant.</span>
         <span>Estado</span>
       </div>
       {INVENTORY_ROWS.map((row) => (
@@ -148,17 +148,17 @@ function TableBody() {
           key={row.sku}
           type="button"
           onClick={() => setSelectedSku(row.sku)}
-          className={`focus-ring relative grid w-full grid-cols-[0.9fr_1.8fr_0.7fr_1fr] items-center gap-2 border-b py-3 text-left font-sans text-[11px] transition-colors md:gap-3 md:text-xs ${
+          className={`focus-ring relative grid w-full grid-cols-[1.8fr_0.6fr_1fr] items-center gap-2 border-b py-2.5 text-left font-sans text-[11px] transition-colors sm:grid-cols-[0.9fr_1.8fr_0.7fr_1fr] sm:py-3 md:gap-3 md:text-xs ${
             selectedSku === row.sku
               ? 'border-accent-light/15 bg-accent-light/[0.055] text-white/88'
               : 'border-white/5 text-white/68 hover:bg-white/[0.035]'
           }`}
         >
           {selectedSku === row.sku && <span className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-accent-light" />}
-          <span className="text-white/40">{row.sku}</span>
+          <span className="hidden text-white/40 sm:inline">{row.sku}</span>
           <span className="truncate">{row.name}</span>
           <span>{row.qty}</span>
-          <span className={`w-fit rounded-full px-2 py-0.5 text-[10px] ${STATUS_STYLE[row.status]}`}>
+          <span className={`w-fit truncate rounded-full px-2 py-0.5 text-[9px] sm:text-[10px] ${STATUS_STYLE[row.status]}`}>
             {row.status}
           </span>
         </button>
@@ -169,10 +169,10 @@ function TableBody() {
 
 function PeopleBody() {
   return (
-    <div className="grid flex-1 grid-cols-2 gap-3 p-5 md:grid-cols-3">
+    <div className="grid flex-1 auto-rows-min grid-cols-1 gap-2 overflow-hidden p-4 xs:grid-cols-2 sm:gap-3 sm:p-5 md:grid-cols-3">
       {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.03] p-3">
-          <div className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-green-700/60 to-lime-400/25" />
+        <div key={i} className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.03] p-2.5 sm:p-3">
+          <div className="h-8 w-8 shrink-0 rounded-full bg-gradient-to-br from-green-700/60 to-lime-400/25 sm:h-9 sm:w-9" />
           <div className="flex flex-1 flex-col gap-1.5">
             <Bar w="w-16" h="h-1.5" />
             <Bar w="w-10" h="h-1.5" className="opacity-40" />
@@ -185,16 +185,16 @@ function PeopleBody() {
 
 function MapBody() {
   return (
-    <div className="relative flex-1 overflow-hidden p-5">
+    <div className="relative flex-1 overflow-hidden p-4 sm:p-5">
       <div
-        className="absolute inset-5 rounded-lg opacity-40"
+        className="grid-fine absolute inset-4 rounded-lg opacity-40 sm:inset-5"
         style={{
           backgroundImage:
             'linear-gradient(rgba(24,224,96,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(24,224,96,0.1) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
         }}
       />
-      <div className="absolute inset-5 rounded-lg border border-white/5" />
+      <div className="absolute inset-4 rounded-lg border border-white/5 sm:inset-5" />
       {[[20, 30], [55, 60], [72, 25], [38, 72], [85, 55]].map(([x, y], i) => (
         <span
           key={i}
@@ -208,8 +208,8 @@ function MapBody() {
 
 function ReportsBody() {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-5">
-      <div className="flex h-24 items-end gap-2">
+    <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-hidden p-4 sm:gap-4 sm:p-5">
+      <div className="flex min-h-0 flex-1 items-end gap-2">
         <svg viewBox="0 0 200 60" className="h-full w-full" preserveAspectRatio="none">
           <polyline
             points="0,50 25,35 50,42 75,20 100,28 125,10 150,22 175,8 200,15"
@@ -219,9 +219,9 @@ function ReportsBody() {
           />
         </svg>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid shrink-0 grid-cols-3 gap-2 sm:gap-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="rounded-lg border border-white/5 bg-white/[0.03] p-3">
+          <div key={i} className="rounded-lg border border-white/5 bg-white/[0.03] p-2.5 sm:p-3">
             <Bar w="w-12" h="h-1.5" />
             <Bar w="w-8" h="h-2" className="mt-2 bg-accent-light/40" />
           </div>
@@ -243,7 +243,7 @@ const KANBAN_COLUMNS = [
 
 function KanbanBody() {
   return (
-    <div className="grid flex-1 grid-cols-3 gap-3 overflow-hidden p-5">
+    <div className="grid flex-1 grid-cols-3 gap-2 overflow-hidden p-4 sm:gap-3 sm:p-5">
       {KANBAN_COLUMNS.map((col) => (
         <div key={col.title} className="flex flex-col gap-2.5 rounded-lg border border-white/5 bg-white/[0.02] p-2.5">
           <div className="flex items-center gap-2 px-1">
@@ -328,7 +328,7 @@ function CalendarBody() {
           </div>
         ))}
       </div>
-      <div className="w-32 shrink-0 border-l border-white/5 pl-4">
+      <div className="hidden w-32 shrink-0 border-l border-white/5 pl-4 sm:block">
         <span className="font-sans text-[10px] uppercase tracking-wide text-white/40">Hoy</span>
         <div className="mt-2 flex flex-col gap-2.5">
           {BOOKINGS.map((b) => (
@@ -364,8 +364,8 @@ function EnterpriseBody() {
               className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 font-sans text-xs"
             >
               <div className="h-6 w-6 shrink-0 rounded-full bg-gradient-to-br from-green-700/60 to-lime-400/25" />
-              <span className="flex-1 truncate text-white/70">{r.user}</span>
-              <span className="text-white/40">{r.role}</span>
+              <span className="min-w-0 flex-1 truncate text-white/70">{r.user}</span>
+              <span className="hidden shrink-0 text-white/40 sm:inline">{r.role}</span>
               <span
                 className={`rounded-full px-2 py-0.5 text-[10px] ${
                   r.status === 'Activo' ? 'bg-emerald-400/15 text-emerald-300' : 'bg-rose-400/15 text-rose-300'
@@ -409,7 +409,7 @@ const BODIES = {
 export default function MockScreen({ id, title, featured = false }) {
   if (id === 'movil') {
     return (
-      <div className="mx-auto flex h-[420px] w-[220px] flex-col overflow-hidden rounded-[2rem] border-4 border-white/10 bg-base-900 shadow-[0_30px_80px_rgba(0,0,0,0.5)] md:h-[480px] md:w-[250px]">
+      <div className="mx-auto flex h-[330px] w-[180px] flex-col overflow-hidden rounded-[1.75rem] border-4 border-white/10 bg-base-900 shadow-[0_30px_80px_rgba(0,0,0,0.5)] xs:h-[380px] xs:w-[200px] sm:h-[420px] sm:w-[220px] sm:rounded-[2rem] md:h-[480px] md:w-[250px]">
         <div className="flex items-center justify-between px-4 pb-1 pt-3">
           <Bar w="w-10" h="h-1.5" />
           <div className="h-1.5 w-1.5 rounded-full bg-accent-light" />
@@ -434,11 +434,11 @@ export default function MockScreen({ id, title, featured = false }) {
   const Body = BODIES[id] || DashboardBody
 
   return (
-    <div className={`relative z-10 isolate mx-auto flex h-[360px] w-full flex-col overflow-hidden rounded-lg border border-white/10 bg-[#07100b] shadow-[0_30px_80px_rgba(0,0,0,0.5)] md:h-[480px] ${featured ? 'max-w-5xl' : 'max-w-3xl'}`}>
-      <div className="flex h-9 shrink-0 items-center gap-1.5 border-b border-white/5 bg-white/[0.02] px-4">
-        <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+    <div className={`relative z-10 isolate mx-auto flex h-[330px] w-full flex-col overflow-hidden rounded-lg border border-white/10 bg-[#07100b] shadow-[0_30px_80px_rgba(0,0,0,0.5)] xs:h-[360px] sm:h-[420px] md:h-[480px] ${featured ? 'max-w-5xl' : 'max-w-3xl'}`}>
+      <div className="flex h-8 shrink-0 items-center gap-1.5 border-b border-white/5 bg-white/[0.02] px-3.5 sm:h-9 sm:px-4">
+        <span className="h-2 w-2 rounded-full bg-white/10 sm:h-2.5 sm:w-2.5" />
+        <span className="h-2 w-2 rounded-full bg-white/10 sm:h-2.5 sm:w-2.5" />
+        <span className="h-2 w-2 rounded-full bg-white/10 sm:h-2.5 sm:w-2.5" />
       </div>
       <div className="flex min-h-0 flex-1">
         <Sidebar />

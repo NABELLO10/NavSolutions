@@ -4,7 +4,7 @@ import RevealText from '../../components/RevealText'
 
 export default function Results() {
   return (
-    <section className="relative px-6 py-28 md:px-10 md:py-36">
+    <section className="relative px-5 py-20 sm:px-6 sm:py-28 md:px-10 md:py-36">
       <div className="mx-auto max-w-3xl text-center">
         <RevealText
           as="h2"
@@ -13,7 +13,7 @@ export default function Results() {
         />
       </div>
 
-      <div className="mx-auto mt-14 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {RESULTS.map((result, i) => (
           <motion.div
             key={result}
@@ -21,7 +21,8 @@ export default function Results() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.4, delay: i * 0.045, ease: [0.16, 1, 0.3, 1] }}
-            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors duration-300 hover:border-accent-light/40 hover:bg-white/[0.05]"
+            whileTap={{ scale: 0.985 }}
+            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors duration-300 hover:border-accent-light/40 hover:bg-white/[0.05] sm:p-6"
           >
             <div
               aria-hidden="true"
@@ -31,7 +32,7 @@ export default function Results() {
             <span className="relative font-display text-xs font-semibold tracking-[0.15em] text-accent-light/70">
               {String(i + 1).padStart(2, '0')}
             </span>
-            <p className="relative mt-4 font-display text-xl font-bold leading-snug text-white md:text-2xl">
+            <p className="relative mt-3 font-display text-lg font-bold leading-snug text-white sm:mt-4 sm:text-xl md:text-2xl">
               {result}
             </p>
           </motion.div>

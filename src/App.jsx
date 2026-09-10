@@ -24,16 +24,20 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [ready, setReady] = useState(false)
   const reducedMotion = usePrefersReducedMotion()
-  const { isLowPower } = useDeviceProfile()
+  const { tier } = useDeviceProfile()
 
-  const enableHeavyFx = !reducedMotion && !isLowPower
-  const disableSmoothScroll = reducedMotion
+  // Pointer-tracked physics: desktop-class hardware only.
+  const enableHeavyFx = !reducedMotion && tier === 'high'
+  // Looping decorative motion (canvas drift, ambient glow): everything
+  // except reduced-motion users and genuinely weak devices. Phones get
+  // an animated page, just a cheaper one.
+  const enableAmbientFx = !reducedMotion && tier !== 'low'
 
-  useSmoothScroll({ disabled: disableSmoothScroll })
+  useSmoothScroll({ disabled: reducedMotion })
 
   return (
     <div>
-      <AmbientBackground lowPower={reducedMotion || isLowPower} />
+      <AmbientBackground animate={enableAmbientFx} />
 
       <Loader onDone={() => {
         setLoading(false)
@@ -43,7 +47,7 @@ export default function App() {
       <Header />
 
       <main>
-        <Hero ready={ready} enableHeavyFx={enableHeavyFx} />
+        <Hero ready={ready} enableHeavyFx={enableHeavyFx} enableAmbientFx={enableAmbientFx} />
         <Story />
         <Problems />
         <div className="cv-auto">

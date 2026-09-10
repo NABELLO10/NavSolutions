@@ -23,11 +23,11 @@ export default function Loader({ onDone }) {
             initial={{ scale: 0.88, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-8 flex w-full justify-center px-6"
+            className="mb-8 flex w-full justify-center px-5 sm:px-6"
           >
             <BrandLogo size="loader" />
           </motion.div>
-          <div className="h-px w-40 overflow-hidden bg-white/10">
+          <div className="h-px w-32 overflow-hidden bg-white/10 sm:w-40">
             <motion.div
               className="h-full w-full origin-left bg-gradient-to-r from-green-700 via-green-500 to-lime-400"
               initial={{ scaleX: 0 }}

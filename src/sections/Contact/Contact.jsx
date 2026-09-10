@@ -25,7 +25,7 @@ export default function Contact() {
   return (
     <section
       id="contacto"
-      className="relative overflow-hidden px-6 py-32 md:px-10 md:py-44"
+      className="relative overflow-hidden px-5 py-20 sm:px-6 sm:py-28 md:px-10 md:py-44"
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -38,12 +38,12 @@ export default function Contact() {
         <RevealText
           as="h2"
           text="¿Tienes una idea?"
-          className="font-display text-giant font-extrabold text-white"
+          className="text-balance font-display text-giant font-extrabold leading-tight text-white"
         />
         <RevealText
           as="p"
           text="Construyámosla."
-          className="mt-2 font-display text-giant font-extrabold text-gradient"
+          className="mt-1 font-display text-giant font-extrabold leading-tight text-gradient sm:mt-2"
         />
 
         <motion.p
@@ -51,7 +51,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.35, delay: 0.06 }}
-          className="mx-auto mt-6 max-w-md font-sans text-white/55"
+          className="mx-auto mt-5 max-w-md font-sans text-[15px] text-white/55 sm:mt-6 sm:text-base"
         >
           Cuéntanos qué quieres mejorar, automatizar o desarrollar.
         </motion.p>
@@ -61,21 +61,22 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.35, delay: 0.1 }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-4"
+          className="mt-7 flex flex-col items-stretch justify-center gap-3 xs:flex-row xs:flex-wrap xs:items-center xs:gap-4 sm:mt-8"
         >
           <a
             href={`https://wa.me/${CONTACT.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 font-sans text-sm text-white/70 transition-colors hover:text-white focus-ring"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 px-5 py-3 font-sans text-sm text-white/70 transition-colors hover:border-white/25 hover:text-white focus-ring xs:py-2.5"
           >
             <FaWhatsapp /> WhatsApp
           </a>
           <a
             href={`mailto:${CONTACT.email}`}
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 font-sans text-sm text-white/70 transition-colors hover:text-white focus-ring"
+            className="inline-flex min-w-0 items-center justify-center gap-2 rounded-full border border-white/10 px-5 py-3 font-sans text-sm text-white/70 transition-colors hover:border-white/25 hover:text-white focus-ring xs:py-2.5"
           >
-            <FaRegEnvelope /> {CONTACT.email}
+            <FaRegEnvelope className="shrink-0" />
+            <span className="truncate">{CONTACT.email}</span>
           </a>
         </motion.div>
       </div>
@@ -86,9 +87,9 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-        className="relative mx-auto mt-20 flex max-w-2xl flex-col gap-6"
+        className="relative mx-auto mt-12 flex max-w-2xl flex-col gap-5 sm:mt-16 sm:gap-6 md:mt-20"
       >
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2 sm:gap-6">
           <label className="flex flex-col gap-2">
             <span className="font-sans text-xs uppercase tracking-[0.2em] text-white/40">Nombre</span>
             <input
@@ -140,7 +141,7 @@ export default function Contact() {
         <MagneticButton
           as="button"
           type="submit"
-          className="group mt-2 inline-flex w-fit items-center gap-2 self-center rounded-full px-8 py-4 font-sans text-sm font-semibold text-base-950 shadow-[0_0_24px_rgba(77,255,0,0.16)] focus-ring"
+          className="group mt-2 inline-flex w-full items-center justify-center gap-2 self-stretch rounded-full px-8 py-4 font-sans text-sm font-semibold text-base-950 shadow-[0_0_24px_rgba(77,255,0,0.16)] transition-transform active:scale-[0.99] focus-ring xs:w-fit xs:self-center"
           style={{ background: 'linear-gradient(90deg, #D7FF2F 0%, #4DFF00 50%, #00B93E 100%)' }}
         >
           Enviar proyecto

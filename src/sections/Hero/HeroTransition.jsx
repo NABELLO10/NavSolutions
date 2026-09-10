@@ -1,10 +1,10 @@
 export default function HeroTransition() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-48 overflow-hidden" aria-hidden="true">
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-32 overflow-hidden sm:h-40 md:h-48" aria-hidden="true">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#07140b]/20 to-transparent" />
 
       <svg
-        className="absolute inset-x-0 bottom-2 h-32 w-full opacity-60"
+        className="absolute inset-x-0 bottom-2 h-20 w-full opacity-60 sm:h-28 md:h-32"
         viewBox="0 0 1200 128"
         preserveAspectRatio="none"
       >
@@ -37,14 +37,14 @@ export default function HeroTransition() {
         <circle cx="930" cy="54" r="1.8" fill="#00D84A" fillOpacity="0.58" />
       </svg>
 
-      <div className="absolute bottom-[49px] left-[12%] right-[12%] h-px bg-gradient-to-r from-transparent via-accent-light/20 to-transparent">
+      <div className="absolute bottom-[34px] left-[12%] right-[12%] h-px bg-gradient-to-r from-transparent via-accent-light/20 to-transparent sm:bottom-[42px] md:bottom-[49px]">
         <span className="hero-data-packet hero-data-packet-one" />
         <span className="hero-data-packet hero-data-packet-two" />
       </div>
 
-      <div className="absolute bottom-0 left-[18%] h-10 w-px bg-gradient-to-b from-accent-light/22 to-transparent" />
-      <div className="absolute bottom-0 left-1/2 h-14 w-px bg-gradient-to-b from-accent-blue/26 to-transparent" />
-      <div className="absolute bottom-0 right-[22%] h-8 w-px bg-gradient-to-b from-accent-light/18 to-transparent" />
+      <div className="absolute bottom-0 left-[18%] h-7 w-px bg-gradient-to-b from-accent-light/22 to-transparent md:h-10" />
+      <div className="absolute bottom-0 left-1/2 h-10 w-px bg-gradient-to-b from-accent-blue/26 to-transparent md:h-14" />
+      <div className="absolute bottom-0 right-[22%] h-6 w-px bg-gradient-to-b from-accent-light/18 to-transparent md:h-8" />
     </div>
   )
 }

@@ -20,7 +20,7 @@ const PHRASES = [
 
 export default function Story() {
   return (
-    <section className="relative overflow-hidden px-6 py-28 md:px-10 md:py-36">
+    <section className="relative overflow-hidden px-5 py-20 sm:px-6 sm:py-28 md:px-10 md:py-36">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div
           className="ambient-drift absolute left-[6%] top-[8%] h-72 w-72 rounded-full opacity-70"
@@ -36,13 +36,13 @@ export default function Story() {
         />
       </div>
 
-      <div className="relative mx-auto flex max-w-4xl flex-col gap-14 text-center md:gap-20">
+      <div className="relative mx-auto flex max-w-4xl flex-col gap-10 text-center sm:gap-14 md:gap-20">
         {PHRASES.map((parts, i) => (
           <RevealText
             key={i}
             as="p"
             parts={parts}
-            className="text-balance font-display text-giant font-bold leading-tight text-white"
+            className="text-balance font-display text-giant font-bold leading-[1.15] text-white"
           />
         ))}
       </div>

@@ -4,6 +4,19 @@
 
 :root {
   color-scheme: dark;
+
+  /* Fixed-header height, used for anchor scroll-margin and hero padding
+     so every breakpoint stays in sync with the real header size. */
+  --nav-h: 76px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nav-h: 88px;
+  }
 }
 
 * {
@@ -43,6 +56,34 @@ body {
   font-family: 'Inter', 'Manrope', sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Anchor links land below the fixed header even without Lenis
+   (reduced-motion users, and the native fallback). */
+[id] {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+/* Narrow viewports have no room to let a long unbreakable string
+   (an email, a URL) push the layout sideways. */
+h1,
+h2,
+h3,
+p,
+li,
+a {
+  overflow-wrap: break-word;
+}
+
+/* Locks the page behind the mobile menu without the iOS
+   position:fixed scroll-jump. */
+html.menu-open,
+html.menu-open body {
+  overflow: hidden;
+  touch-action: none;
 }
 
 #root {
@@ -199,6 +240,40 @@ button {
 @media (min-width: 1024px) {
   .systems-browser-grid {
     grid-template-columns: 310px minmax(0, 1fr);
+  }
+}
+
+/* Hover-reveal affordances are dead weight on touch: the label never
+   appears, so the collapsed pill just reads as a bare icon. Show the
+   resting state at full clarity instead of a half-faded one. */
+@media (hover: none) {
+  .hover-reveal {
+    display: none;
+  }
+
+  .touch-solid {
+    opacity: 1 !important;
+  }
+}
+
+/* The hero's scroll cue is the first thing to go when the viewport is
+   too short to hold the headline, sub-copy and CTA comfortably
+   (phone landscape, small laptops with the browser chrome expanded). */
+.scroll-cue {
+  display: flex;
+}
+
+@media (max-height: 620px) {
+  .scroll-cue {
+    display: none;
+  }
+}
+
+/* Mobile mock screens: the desktop grid pitch is too dense to read at
+   phone widths. */
+@media (max-width: 639px) {
+  .grid-fine {
+    background-size: 44px 44px !important;
   }
 }
 

@@ -27,8 +27,8 @@ function ScoreRing({ score }) {
   const displayed = useCountUp(score)
 
   return (
-    <div className="relative mx-auto h-44 w-44">
-      <svg width="176" height="176" viewBox="0 0 176 176" className="-rotate-90">
+    <div className="relative mx-auto h-36 w-36 sm:h-44 sm:w-44">
+      <svg viewBox="0 0 176 176" className="h-full w-full -rotate-90">
         <circle cx="88" cy="88" r={radius} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="10" />
         <motion.circle
           cx="88"
@@ -51,7 +51,7 @@ function ScoreRing({ score }) {
         </defs>
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-display text-4xl font-extrabold text-white">{displayed}%</span>
+        <span className="font-display text-3xl font-extrabold text-white sm:text-4xl">{displayed}%</span>
         <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-accent-light">
           Necesidad
         </span>
@@ -88,11 +88,11 @@ export default function Quiz() {
   }
 
   return (
-    <div className="relative mx-auto mt-24 w-full max-w-2xl rounded-3xl border border-white/10 bg-white/[0.04] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.35)] md:mt-32 md:p-12">
+    <div className="relative mx-auto mt-16 w-full max-w-2xl rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-[0_30px_80px_rgba(0,0,0,0.35)] xs:p-6 sm:mt-24 sm:rounded-3xl sm:p-8 md:mt-32 md:p-12">
       {!finished ? (
         <>
           <div className="mb-2 flex items-center justify-between">
-            <span className="font-sans text-xs uppercase tracking-[0.25em] text-accent-light/70">
+            <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-accent-light/70 sm:text-xs sm:tracking-[0.25em]">
               ¿Necesitas un sistema?
             </span>
             <span className="shrink-0 font-sans text-xs text-white/40">
@@ -115,16 +115,16 @@ export default function Quiz() {
               exit={{ opacity: 0, x: -16 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             >
-              <p className="text-balance font-display text-xl font-bold leading-snug text-white md:text-2xl">
+              <p className="text-balance font-display text-lg font-bold leading-snug text-white sm:text-xl md:text-2xl">
                 {QUIZ_QUESTIONS[step]}
               </p>
 
-              <div className="mt-8 flex gap-4">
+              <div className="mt-6 flex gap-3 sm:mt-8 sm:gap-4">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => answer(true)}
-                  className="flex-1 rounded-2xl border border-accent-light/30 bg-accent-blue/10 py-4 font-sans text-sm font-semibold text-accent-light transition-colors hover:bg-accent-blue/20 focus-ring"
+                  className="flex-1 rounded-xl border border-accent-light/30 bg-accent-blue/10 py-3.5 font-sans text-sm font-semibold text-accent-light transition-colors hover:bg-accent-blue/20 focus-ring sm:rounded-2xl sm:py-4"
                 >
                   Sí
                 </motion.button>
@@ -132,7 +132,7 @@ export default function Quiz() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => answer(false)}
-                  className="flex-1 rounded-2xl border border-white/10 bg-white/[0.03] py-4 font-sans text-sm font-semibold text-white/60 transition-colors hover:bg-white/[0.06] focus-ring"
+                  className="flex-1 rounded-xl border border-white/10 bg-white/[0.03] py-3.5 font-sans text-sm font-semibold text-white/60 transition-colors hover:bg-white/[0.06] focus-ring sm:rounded-2xl sm:py-4"
                 >
                   No
                 </motion.button>
@@ -148,22 +148,22 @@ export default function Quiz() {
           className="text-center"
         >
           <ScoreRing score={score} />
-          <h3 className="mt-6 text-balance font-display text-2xl font-bold text-white md:text-3xl">
+          <h3 className="mt-5 text-balance font-display text-xl font-bold leading-snug text-white sm:mt-6 sm:text-2xl md:text-3xl">
             {result.title}
           </h3>
-          <p className="mx-auto mt-3 max-w-md font-sans text-white/55">{result.text}</p>
+          <p className="mx-auto mt-3 max-w-md font-sans text-[15px] text-white/55 sm:text-base">{result.text}</p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-7 flex flex-col items-stretch justify-center gap-3 xs:flex-row xs:flex-wrap xs:items-center xs:gap-4 sm:mt-8">
             <a
               href="#contacto"
-              className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-sans text-sm font-semibold text-base-950 focus-ring"
+              className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 font-sans text-sm font-semibold text-base-950 transition-transform active:scale-[0.98] focus-ring"
               style={{ background: 'linear-gradient(90deg, #D7FF2F 0%, #4DFF00 54%, #00B93E 100%)' }}
             >
               Cuéntanos tu caso <span>→</span>
             </a>
             <button
               onClick={restart}
-              className="font-sans text-sm text-white/40 underline-offset-4 transition-colors hover:text-white/70 hover:underline focus-ring"
+              className="py-2 font-sans text-sm text-white/40 underline-offset-4 transition-colors hover:text-white/70 hover:underline focus-ring"
             >
               Repetir quiz
             </button>

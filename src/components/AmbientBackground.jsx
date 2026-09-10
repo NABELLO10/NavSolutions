@@ -12,7 +12,7 @@
 //
 // The blobs stay compositor-friendly while scrolling: no scroll-linked
 // parallax, just optional slow CSS drift when the device can afford it.
-export default function AmbientBackground({ lowPower = false }) {
+export default function AmbientBackground({ animate = true }) {
   return (
     <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
       {/* Base is a deep vertical gradient (never a flat single black),
@@ -40,14 +40,14 @@ export default function AmbientBackground({ lowPower = false }) {
 
       <div className="absolute -left-1/4 top-[4%] h-[70vmax] w-[70vmax]">
         <div
-          className={`h-full w-full rounded-full ${lowPower ? '' : 'ambient-drift'}`}
+          className={`h-full w-full rounded-full ${animate ? 'ambient-drift' : ''}`}
           style={{ background: 'radial-gradient(circle, rgba(24,224,96,0.13) 0%, rgba(24,224,96,0) 70%)' }}
         />
       </div>
 
       <div className="absolute -right-1/4 top-[40%] h-[66vmax] w-[66vmax]">
         <div
-          className={`h-full w-full rounded-full ${lowPower ? '' : 'ambient-drift-alt'}`}
+          className={`h-full w-full rounded-full ${animate ? 'ambient-drift-alt' : ''}`}
           style={{ background: 'radial-gradient(circle, rgba(15,184,79,0.1) 0%, rgba(15,184,79,0) 70%)' }}
         />
       </div>

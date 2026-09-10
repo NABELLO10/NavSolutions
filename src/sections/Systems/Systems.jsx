@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   FiArrowLeft,
@@ -91,20 +91,53 @@ const SCREEN_DETAILS = {
 
 export default function Systems() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [direction, setDirection] = useState(1)
+  const tabsRef = useRef(null)
 
   const activeScreen = SYSTEM_SCREENS[activeIndex]
   const detail = SCREEN_DETAILS[activeScreen.id]
 
   const showPrevious = () => {
+    setDirection(-1)
     setActiveIndex((current) => (current - 1 + SYSTEM_SCREENS.length) % SYSTEM_SCREENS.length)
   }
 
   const showNext = () => {
+    setDirection(1)
     setActiveIndex((current) => (current + 1) % SYSTEM_SCREENS.length)
   }
 
+  const selectIndex = (index) => {
+    setDirection(index > activeIndex ? 1 : -1)
+    setActiveIndex(index)
+  }
+
+  // Roving arrow-key navigation, which is what a role="tablist" is
+  // expected to support once the tabs stack into a grid.
+  const handleTabKeys = (event) => {
+    const keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }
+    const step = keys[event.key]
+    if (!step) return
+
+    event.preventDefault()
+    const next = (activeIndex + step + SYSTEM_SCREENS.length) % SYSTEM_SCREENS.length
+    selectIndex(next)
+    tabsRef.current?.querySelectorAll('[role="tab"]')[next]?.focus()
+  }
+
+  // Touch users get the same affordance the arrows give a mouse: a
+  // horizontal flick over the mock advances the carousel. The drag is
+  // elastic and snaps straight back, and dragDirectionLock keeps a
+  // vertical swipe started on the panel scrolling the page instead.
+  const handleDragEnd = (_event, info) => {
+    const swipe = info.offset.x
+    const velocity = info.velocity.x
+    if (swipe < -60 || velocity < -450) showNext()
+    else if (swipe > 60 || velocity > 450) showPrevious()
+  }
+
   return (
-    <section id="proyectos" className="relative isolate overflow-hidden px-6 py-28 md:px-10 md:py-36">
+    <section id="proyectos" className="relative isolate overflow-hidden px-5 py-20 sm:px-6 sm:py-28 md:px-10 md:py-36">
       <AnimatePresence mode="wait">
         <motion.div
           key={activeScreen.id}
@@ -119,19 +152,19 @@ export default function Systems() {
       </AnimatePresence>
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="grid gap-6 lg:grid-cols-[1fr_0.82fr] lg:items-end">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_0.82fr] lg:items-end">
           <RevealText
             as="h2"
             text="Sistemas pensados para trabajar contigo."
             className="max-w-3xl text-balance font-display text-big font-bold leading-tight text-white"
           />
-          <p className="max-w-xl font-sans text-base leading-relaxed text-white/50 lg:justify-self-end">
+          <p className="max-w-xl font-sans text-[15px] leading-relaxed text-white/50 sm:text-base lg:justify-self-end">
             Explora cómo una misma base tecnológica puede adaptarse a distintas áreas, equipos y
             decisiones del mundo real.
           </p>
         </div>
 
-        <div className="systems-browser-grid mt-14 grid gap-10 lg:gap-12">
+        <div className="systems-browser-grid mt-10 grid gap-8 sm:mt-14 sm:gap-10 lg:gap-12">
           <div>
             <div className="mb-4 flex items-center justify-between">
               <p className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-white/38">
@@ -142,7 +175,13 @@ export default function Systems() {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 lg:grid-cols-1" role="tablist" aria-label="Tipos de sistemas">
+            <div
+              ref={tabsRef}
+              className="grid grid-cols-2 gap-2 xs:grid-cols-3 lg:grid-cols-1"
+              role="tablist"
+              aria-label="Tipos de sistemas"
+              onKeyDown={handleTabKeys}
+            >
               {SYSTEM_SCREENS.map((screen, index) => {
                 const item = SCREEN_DETAILS[screen.id]
                 const Icon = item.icon
@@ -154,21 +193,22 @@ export default function Systems() {
                     type="button"
                     role="tab"
                     aria-selected={selected}
-                    onClick={() => setActiveIndex(index)}
-                    className={`focus-ring group grid min-h-[66px] grid-cols-[32px_1fr] items-center gap-3 rounded-md border px-3.5 text-left transition-all duration-300 lg:grid-cols-[32px_1fr_18px] ${
+                    tabIndex={selected ? 0 : -1}
+                    onClick={() => selectIndex(index)}
+                    className={`focus-ring group grid min-h-[64px] grid-cols-[28px_1fr] items-center gap-2.5 rounded-lg border px-3 py-2 text-left transition-all duration-300 active:scale-[0.98] sm:min-h-[66px] sm:grid-cols-[32px_1fr] sm:gap-3 sm:px-3.5 lg:grid-cols-[32px_1fr_18px] ${
                       selected
                         ? item.active
                         : 'border-white/[0.07] bg-black/10 text-white/48 hover:border-white/15 hover:bg-white/[0.04] hover:text-white/78'
                     }`}
                   >
-                    <span className={`grid h-8 w-8 place-items-center rounded-md bg-white/[0.045] ${selected ? item.color : 'text-white/34'}`}>
-                      <Icon size={15} />
+                    <span className={`grid h-7 w-7 place-items-center rounded-md bg-white/[0.045] sm:h-8 sm:w-8 ${selected ? item.color : 'text-white/34'}`}>
+                      <Icon size={14} />
                     </span>
                     <span className="min-w-0">
                       <span className="block font-sans text-[9px] uppercase tracking-[0.14em] opacity-50">
                         Sistema {String(index + 1).padStart(2, '0')}
                       </span>
-                      <span className="mt-1 block font-sans text-xs font-semibold leading-snug">
+                      <span className="mt-0.5 block font-sans text-[11px] font-semibold leading-snug sm:mt-1 sm:text-xs">
                         {screen.label}
                       </span>
                     </span>
@@ -187,30 +227,36 @@ export default function Systems() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeScreen.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, x: direction * 28, y: 10 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                exit={{ opacity: 0, x: direction * -22, y: -6 }}
                 transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
+                drag="x"
+                dragDirectionLock
+                dragElastic={0.12}
+                dragConstraints={{ left: 0, right: 0 }}
+                onDragEnd={handleDragEnd}
                 role="tabpanel"
+                className="touch-pan-y"
               >
-                <div className="relative mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="relative mb-4 flex flex-col gap-3 sm:mb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
                   <div>
-                    <p className={`font-sans text-[11px] font-bold uppercase tracking-[0.22em] ${detail.color}`}>
+                    <p className={`font-sans text-[10px] font-bold uppercase tracking-[0.18em] sm:text-[11px] sm:tracking-[0.22em] ${detail.color}`}>
                       {detail.kicker}
                     </p>
-                    <h3 className="mt-2 font-display text-2xl font-extrabold text-white md:text-3xl">
+                    <h3 className="mt-1.5 font-display text-xl font-extrabold text-white sm:mt-2 sm:text-2xl md:text-3xl">
                       {activeScreen.label}
                     </h3>
-                    <p className="mt-2 max-w-xl font-sans text-sm leading-relaxed text-white/52">
+                    <p className="mt-2 max-w-xl font-sans text-[13px] leading-relaxed text-white/52 sm:text-sm">
                       {detail.description}
                     </p>
                   </div>
 
-                  <div className="flex shrink-0 items-center gap-2">
+                  <div className="flex shrink-0 items-center gap-2 self-start sm:self-auto">
                     <button
                       type="button"
                       onClick={showPrevious}
-                      className="focus-ring grid h-9 w-9 place-items-center rounded-md border border-white/10 text-white/50 transition-colors hover:border-white/20 hover:text-white"
+                      className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-white/50 transition-colors hover:border-white/20 hover:text-white active:scale-95 md:h-9 md:w-9"
                       title="Sistema anterior"
                       aria-label="Sistema anterior"
                     >
@@ -219,7 +265,7 @@ export default function Systems() {
                     <button
                       type="button"
                       onClick={showNext}
-                      className="focus-ring grid h-9 w-9 place-items-center rounded-md border border-white/10 text-white/50 transition-colors hover:border-white/20 hover:text-white"
+                      className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-white/50 transition-colors hover:border-white/20 hover:text-white active:scale-95 md:h-9 md:w-9"
                       title="Sistema siguiente"
                       aria-label="Sistema siguiente"
                     >
@@ -231,9 +277,13 @@ export default function Systems() {
                 <div className={`h-px bg-gradient-to-r ${detail.line}`} />
                 <MockScreen id={activeScreen.id} title={activeScreen.label} featured />
 
-                <div className="mt-5 flex flex-wrap gap-2">
+                <p className="mt-3 text-center font-sans text-[10px] uppercase tracking-[0.18em] text-white/25 sm:hidden">
+                  Desliza para cambiar
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
                   {detail.tags.map((tag) => (
-                    <span key={tag} className={`rounded-full border px-3 py-1 font-sans text-[10px] ${detail.tag}`}>
+                    <span key={tag} className={`rounded-full border px-2.5 py-1 font-sans text-[10px] sm:px-3 ${detail.tag}`}>
                       {tag}
                     </span>
                   ))}
