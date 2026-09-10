@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="12" y1="8" x2="52" y2="56">
+      <stop offset="0%" stop-color="#132014" />
+      <stop offset="100%" stop-color="#030705" />
+    </linearGradient>
+    <linearGradient id="stroke" x1="10" y1="8" x2="54" y2="56">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.28" />
+      <stop offset="58%" stop-color="#4DFF00" stop-opacity="0.26" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.08" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M16 6.5h32c5.25 0 9.5 4.25 9.5 9.5v32c0 5.25-4.25 9.5-9.5 9.5H16c-5.25 0-9.5-4.25-9.5-9.5V16c0-5.25 4.25-9.5 9.5-9.5Z"
+    fill="url(#bg)"
+  />
+  <path
+    d="M16 7.25h32c4.83 0 8.75 3.92 8.75 8.75v32c0 4.83-3.92 8.75-8.75 8.75H16c-4.83 0-8.75-3.92-8.75-8.75V16c0-4.83 3.92-8.75 8.75-8.75Z"
+    fill="none"
+    stroke="url(#stroke)"
+    stroke-width="1.5"
+  />
+  <path d="M19 45V19h7.5l17.8 25.6V19H50v26h-7.5L24.7 19.4V45H19Z" fill="#F7FAF4" />
+  <path d="M31.1 19h6.1l-4.3 26h-6.1L31.1 19Z" fill="#4DFF00" opacity="0.9" />
+</svg>
