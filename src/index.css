@@ -61,10 +61,38 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Anchor links land below the fixed header even without Lenis
-   (reduced-motion users, and the native fallback). */
-[id] {
-  scroll-margin-top: calc(var(--nav-h) + 16px);
+/* One shared measure for every band of the page: header, all sections
+   and the footer. Section headings used to start at eight different x
+   positions (a 256px spread at 1440px) because each section carried its
+   own max-w-*; the outer container is now identical everywhere and only
+   the inner text keeps a narrower measure. */
+.container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container-page {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-page {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Anchor targets sit next to the heading rather than on the <section>,
+   so a jump lands the heading just under the header instead of at the
+   top of the section's (deliberately large) padding. Lenis contributes
+   no offset of its own — this value is the single source of truth. */
+.scroll-anchor {
+  display: block;
+  height: 0;
+  scroll-margin-top: calc(var(--nav-h) + 28px);
 }
 
 /* Narrow viewports have no room to let a long unbreakable string

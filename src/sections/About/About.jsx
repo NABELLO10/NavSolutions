@@ -4,8 +4,8 @@ import { EXPERIENCE_TAGS } from '../../data/content'
 
 export default function About() {
   return (
-    <section className="relative px-5 py-20 sm:px-6 sm:py-28 md:px-10 md:py-36">
-      <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+    <section className="relative py-20 sm:py-28 md:py-36">
+      <div className="container-page grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
         <div>
           <RevealText
             as="h2"

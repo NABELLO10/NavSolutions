@@ -95,7 +95,7 @@ export default function Header() {
       style={{ paddingLeft: 'var(--safe-l)', paddingRight: 'var(--safe-r)' }}
     >
       <div
-        className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 transition-[padding] duration-300 ease-premium sm:px-6 lg:px-10 ${
+        className={`container-page flex items-center justify-between gap-4 transition-[padding] duration-300 ease-premium ${
           scrolled ? 'py-3 md:py-3.5' : 'py-4 md:py-5'
         }`}
       >
@@ -161,7 +161,7 @@ export default function Header() {
             className="overflow-hidden border-t border-white/10 bg-base-950/95 backdrop-blur-xl md:hidden"
           >
             <div
-              className="flex flex-col px-5 pt-2 sm:px-6"
+              className="container-page flex flex-col pt-2"
               style={{ paddingBottom: 'calc(1.5rem + var(--safe-b))' }}
             >
               {NAV_LINKS.map((link) => (

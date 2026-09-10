@@ -13,7 +13,10 @@ export function useSmoothScroll({ disabled }) {
       wheelMultiplier: 0.72,
       touchMultiplier: 1.1,
       anchors: {
-        offset: -84,
+        // 0, deliberately: the landing position comes from the
+        // .scroll-anchor scroll-margin-top. A value here would stack on
+        // top of it and push every anchored heading a header lower.
+        offset: 0,
         duration: 1.1,
         easing: smoothEasing,
       },

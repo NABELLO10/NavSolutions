@@ -56,7 +56,7 @@ export default function KeySection() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-[70svh] flex-col items-center justify-center px-5 py-20 text-center sm:px-6 sm:min-h-[75svh] sm:py-24 md:px-10"
+      className="container-page relative flex min-h-[70svh] flex-col items-center justify-center py-20 text-center sm:min-h-[75svh] sm:py-24"
     >
       <div className="relative mx-auto w-full max-w-4xl">
         {/* Invisible longest phrase reserves the height so the swap

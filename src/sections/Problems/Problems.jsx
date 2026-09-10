@@ -4,10 +4,10 @@ import { CHAOS_ITEMS } from '../../data/content'
 
 export default function Problems() {
   return (
-    <section className="relative overflow-hidden px-5 py-20 sm:px-6 sm:py-28 md:px-10 md:py-36">
+    <section className="relative overflow-hidden py-20 sm:py-28 md:py-36">
       <div className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-accent-light/25 to-transparent" />
 
-      <div className="mx-auto grid max-w-6xl gap-10 sm:gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div className="container-page grid gap-10 sm:gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <span className="font-sans text-[10px] uppercase tracking-[0.24em] text-accent-light/70 sm:text-xs sm:tracking-[0.32em]">
             Donde aparece el caos

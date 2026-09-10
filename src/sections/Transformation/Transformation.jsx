@@ -4,8 +4,8 @@ import { TRANSFORM_BLOCKS } from '../../data/content'
 
 export default function Transformation() {
   return (
-    <section className="relative px-5 py-20 sm:px-6 sm:py-28 md:px-10 md:py-44">
-      <div className="mx-auto max-w-6xl">
+    <section className="relative py-20 sm:py-28 md:py-44">
+      <div className="container-page">
         <RevealText
           as="h2"
           text="Centraliza. Automatiza. Decide."

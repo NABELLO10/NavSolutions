@@ -13,6 +13,7 @@ import {
 import { SYSTEM_SCREENS } from '../../data/content'
 import RevealText from '../../components/RevealText'
 import MockScreen from './MockScreen'
+import SectionAnchor from '../../components/SectionAnchor'
 
 const SCREEN_DETAILS = {
   dashboard: {
@@ -137,7 +138,7 @@ export default function Systems() {
   }
 
   return (
-    <section id="proyectos" className="relative isolate overflow-hidden px-5 py-20 sm:px-6 sm:py-28 md:px-10 md:py-36">
+    <section className="relative isolate overflow-hidden py-20 sm:py-28 md:py-36">
       <AnimatePresence mode="wait">
         <motion.div
           key={activeScreen.id}
@@ -151,7 +152,8 @@ export default function Systems() {
         />
       </AnimatePresence>
 
-      <div className="relative z-10 mx-auto max-w-7xl">
+      <div className="container-page relative z-10">
+        <SectionAnchor id="proyectos" />
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_0.82fr] lg:items-end">
           <RevealText
             as="h2"

@@ -23,7 +23,7 @@ export default function Hero({ ready, enableHeavyFx, enableAmbientFx = true }) {
       <HeroNetwork interactive={enableHeavyFx} animated={enableAmbientFx} />
       <HeroTransition />
 
-      <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 sm:px-6 md:px-10">
+      <div className="container-page pointer-events-none relative z-10 flex flex-1 flex-col justify-center">
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={ready ? { opacity: 1, y: 0 } : {}}

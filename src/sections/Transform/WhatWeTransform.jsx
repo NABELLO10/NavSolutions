@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import RevealText from '../../components/RevealText'
 import { TRANSFORM_PHRASES, SOLUTION_TYPES } from '../../data/content'
+import SectionAnchor from '../../components/SectionAnchor'
 
 // The from → to pair is the payload of this section, not decoration.
 // It used to be `hidden md:flex`, so phone visitors read the phrases
@@ -39,8 +40,9 @@ function PhraseRow({ phrase, index }) {
 
 export default function WhatWeTransform() {
   return (
-    <section id="soluciones" className="relative px-5 py-20 sm:px-6 sm:py-28 md:px-10 md:py-40">
-      <div className="mx-auto max-w-5xl">
+    <section className="relative py-20 sm:py-28 md:py-40">
+      <div className="container-page">
+        <SectionAnchor id="soluciones" />
         <RevealText
           as="h2"
           text="¿Qué podemos transformar?"
