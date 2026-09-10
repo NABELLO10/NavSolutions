@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tarjeta de Presentacion - NavSolutions</title>
+    <style>
+      :root {
+        --paper: #f5f6f1;
+        --paper-2: #eef1ea;
+        --ink: #071009;
+        --muted: #596158;
+        --line: rgba(7, 16, 9, 0.13);
+        --green: #2bc900;
+        --green-dark: #167800;
+        --trim-w: 90mm;
+        --trim-h: 50mm;
+        --bleed: 3mm;
+        --card-w: calc(var(--trim-w) + var(--bleed) * 2);
+        --card-h: calc(var(--trim-h) + var(--bleed) * 2);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #dfe3da;
+        color: var(--ink);
+        font-family: Inter, Manrope, Arial, sans-serif;
+      }
+
+      .screen {
+        padding: 34px;
+      }
+
+      .toolbar {
+        max-width: 980px;
+        margin: 0 auto 24px;
+        color: #1b241d;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .toolbar h1 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        letter-spacing: 0;
+      }
+
+      .toolbar p {
+        margin: 0;
+        color: #596158;
+      }
+
+      .sheet {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        justify-content: center;
+      }
+
+      .card-wrap {
+        position: relative;
+        width: var(--card-w);
+        height: var(--card-h);
+        filter: drop-shadow(0 20px 34px rgba(7, 16, 9, 0.16));
+      }
+
+      .card {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, rgba(43, 201, 0, 0.12), transparent 34%),
+          linear-gradient(135deg, var(--paper) 0%, var(--paper-2) 100%);
+      }
+
+      .safe {
+        position: absolute;
+        inset: calc(var(--bleed) + 5mm);
+        z-index: 2;
+      }
+
+      .rule {
+        position: absolute;
+        left: calc(var(--bleed) + 5mm);
+        right: calc(var(--bleed) + 5mm);
+        bottom: calc(var(--bleed) + 5mm);
+        height: 1px;
+        background: var(--line);
+      }
+
+      .brand-row {
+        display: inline-flex;
+        align-items: center;
+        gap: 3mm;
+      }
+
+      .mark {
+        width: 10.6mm;
+        height: 10.6mm;
+        flex: none;
+      }
+
+      .brand {
+        font-size: 12.2pt;
+        font-weight: 850;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .brand span {
+        color: var(--green-dark);
+      }
+
+      .tagline {
+        margin-top: 1.2mm;
+        color: var(--muted);
+        font-size: 4.6pt;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .front .safe {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+      }
+
+      .headline {
+        align-self: center;
+        max-width: 59mm;
+      }
+
+      .headline h2 {
+        margin: 0;
+        font-size: 14.2pt;
+        font-weight: 850;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .headline p {
+        margin: 3mm 0 0;
+        max-width: 54mm;
+        color: var(--muted);
+        font-size: 6.4pt;
+        font-weight: 560;
+        line-height: 1.45;
+      }
+
+      .services {
+        display: flex;
+        gap: 3mm;
+        color: var(--ink);
+        font-size: 5.2pt;
+        font-weight: 780;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .services span + span {
+        position: relative;
+      }
+
+      .services span + span::before {
+        content: "";
+        position: absolute;
+        left: -1.6mm;
+        top: 50%;
+        width: 0.7mm;
+        height: 0.7mm;
+        border-radius: 50%;
+        background: var(--green);
+        transform: translateY(-50%);
+      }
+
+      .corner {
+        position: absolute;
+        right: calc(var(--bleed) + 5mm);
+        top: calc(var(--bleed) + 5mm);
+        width: 14mm;
+        height: 14mm;
+        border-top: 0.9mm solid var(--green);
+        border-right: 0.9mm solid var(--green);
+        opacity: 0.9;
+      }
+
+      .back .safe {
+        display: grid;
+        grid-template-columns: 1fr 41mm;
+        gap: 5mm;
+      }
+
+      .person {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .name {
+        margin-top: 5mm;
+        font-size: 11.4pt;
+        font-weight: 850;
+        line-height: 1.04;
+      }
+
+      .role {
+        margin-top: 1.5mm;
+        color: var(--muted);
+        font-size: 5.8pt;
+        font-weight: 600;
+        line-height: 1.35;
+      }
+
+      .contact-lines {
+        display: grid;
+        gap: 1.1mm;
+        color: var(--ink);
+        font-size: 5.35pt;
+        font-weight: 650;
+        line-height: 1.25;
+      }
+
+      .contact-lines span {
+        color: var(--muted);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .qr-panel {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.6mm;
+        align-content: center;
+        align-self: center;
+      }
+
+      .qr-card {
+        min-width: 0;
+      }
+
+      .qr-box {
+        display: grid;
+        width: 16.6mm;
+        height: 16.6mm;
+        place-items: center;
+        border: 1px solid var(--line);
+        background: white;
+        padding: 1.4mm;
+      }
+
+      .qr-box img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .qr-label {
+        margin-top: 1.3mm;
+        color: var(--ink);
+        font-size: 4.95pt;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
+
+      .qr-target {
+        margin-top: 0.6mm;
+        color: var(--muted);
+        font-size: 4.6pt;
+        font-weight: 650;
+        line-height: 1.15;
+      }
+
+      .arrow {
+        display: inline-block;
+        margin-right: 1mm;
+        color: var(--green-dark);
+      }
+
+      .crop {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .crop::before,
+      .crop::after,
+      .card-wrap::before,
+      .card-wrap::after {
+        content: "";
+        position: absolute;
+        z-index: 5;
+        background: #303830;
+      }
+
+      .crop::before {
+        left: var(--bleed);
+        top: 0;
+        width: 1px;
+        height: 2.2mm;
+        box-shadow: 90mm 0 #303830, 0 53.8mm #303830, 90mm 53.8mm #303830;
+      }
+
+      .crop::after {
+        left: 0;
+        top: var(--bleed);
+        width: 2.2mm;
+        height: 1px;
+        box-shadow: 93.8mm 0 #303830, 0 50mm #303830, 93.8mm 50mm #303830;
+      }
+
+      .card-wrap::before {
+        right: var(--bleed);
+        top: 0;
+        width: 1px;
+        height: 2.2mm;
+      }
+
+      .card-wrap::after {
+        right: var(--bleed);
+        bottom: 0;
+        width: 1px;
+        height: 2.2mm;
+      }
+
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      @media print {
+        body {
+          background: white;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+
+        .screen {
+          padding: 0;
+        }
+
+        .toolbar {
+          display: none;
+        }
+
+        .sheet {
+          justify-content: flex-start;
+          gap: 10mm;
+        }
+
+        .card-wrap {
+          break-inside: avoid;
+          filter: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="screen">
+      <section class="toolbar">
+        <h1>Tarjeta de presentacion NavSolutions</h1>
+        <p>Formato 90 x 50 mm con 3 mm de sangrado. Imprimir al 100%, doble cara, voltear por borde corto.</p>
+      </section>
+
+      <section class="sheet" aria-label="Tarjeta de presentacion imprimible">
+        <article class="card-wrap" aria-label="Frente">
+          <div class="card front">
+            <div class="safe">
+              <div class="brand-row" aria-label="NavSolutions">
+                <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="N">
+                  <defs>
+                    <linearGradient id="front-bg" x1="12" y1="8" x2="52" y2="56">
+                      <stop offset="0%" stop-color="#132014" />
+                      <stop offset="100%" stop-color="#030705" />
+                    </linearGradient>
+                    <linearGradient id="front-stroke" x1="10" y1="8" x2="54" y2="56">
+                      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.28" />
+                      <stop offset="58%" stop-color="#4DFF00" stop-opacity="0.26" />
+                      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.08" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M16 6.5h32c5.25 0 9.5 4.25 9.5 9.5v32c0 5.25-4.25 9.5-9.5 9.5H16c-5.25 0-9.5-4.25-9.5-9.5V16c0-5.25 4.25-9.5 9.5-9.5Z" fill="url(#front-bg)" />
+                  <path d="M16 7.25h32c4.83 0 8.75 3.92 8.75 8.75v32c0 4.83-3.92 8.75-8.75 8.75H16c-4.83 0-8.75-3.92-8.75-8.75V16c0-4.83 3.92-8.75 8.75-8.75Z" fill="none" stroke="url(#front-stroke)" stroke-width="1.5" />
+                  <path d="M19 45V19h7.5l17.8 25.6V19H50v26h-7.5L24.7 19.4V45H19Z" fill="#F7FAF4" />
+                  <path d="M31.1 19h6.1l-4.3 26h-6.1L31.1 19Z" fill="#4DFF00" opacity="0.9" />
+                </svg>
+                <div>
+                  <div class="brand">NAV<span>Solutions</span></div>
+                  <div class="tagline">Software que transforma</div>
+                </div>
+              </div>
+
+              <div class="headline">
+                <h2>Sistemas a medida para empresas que quieren orden.</h2>
+                <p>Software, automatizaciones e integraciones para convertir procesos manuales en operaciones claras.</p>
+              </div>
+
+              <div class="services">
+                <span>Sistemas</span>
+                <span>Automatizacion</span>
+                <span>Dashboards</span>
+                <span>Web</span>
+              </div>
+            </div>
+            <div class="corner" aria-hidden="true"></div>
+            <div class="rule" aria-hidden="true"></div>
+          </div>
+          <div class="crop" aria-hidden="true"></div>
+        </article>
+
+        <article class="card-wrap" aria-label="Reverso">
+          <div class="card back">
+            <div class="safe">
+              <div class="person">
+                <div>
+                  <div class="brand-row" aria-label="NavSolutions">
+                    <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="N">
+                      <defs>
+                        <linearGradient id="back-bg" x1="12" y1="8" x2="52" y2="56">
+                          <stop offset="0%" stop-color="#132014" />
+                          <stop offset="100%" stop-color="#030705" />
+                        </linearGradient>
+                        <linearGradient id="back-stroke" x1="10" y1="8" x2="54" y2="56">
+                          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.28" />
+                          <stop offset="58%" stop-color="#4DFF00" stop-opacity="0.26" />
+                          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.08" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M16 6.5h32c5.25 0 9.5 4.25 9.5 9.5v32c0 5.25-4.25 9.5-9.5 9.5H16c-5.25 0-9.5-4.25-9.5-9.5V16c0-5.25 4.25-9.5 9.5-9.5Z" fill="url(#back-bg)" />
+                      <path d="M16 7.25h32c4.83 0 8.75 3.92 8.75 8.75v32c0 4.83-3.92 8.75-8.75 8.75H16c-4.83 0-8.75-3.92-8.75-8.75V16c0-4.83 3.92-8.75 8.75-8.75Z" fill="none" stroke="url(#back-stroke)" stroke-width="1.5" />
+                      <path d="M19 45V19h7.5l17.8 25.6V19H50v26h-7.5L24.7 19.4V45H19Z" fill="#F7FAF4" />
+                      <path d="M31.1 19h6.1l-4.3 26h-6.1L31.1 19Z" fill="#4DFF00" opacity="0.9" />
+                    </svg>
+                    <div>
+                      <div class="brand">NAV<span>Solutions</span></div>
+                      <div class="tagline">Software que transforma</div>
+                    </div>
+                  </div>
+                  <div class="name">Milo</div>
+                  <div class="role">Desarrollo de software<br />Automatizacion de procesos</div>
+                </div>
+
+                <div class="contact-lines">
+                  <div><span>WhatsApp</span><br />+56 9 7869 6327</div>
+                  <div><span>Email</span><br />contacto@navsolutions.dev</div>
+                </div>
+              </div>
+
+              <div class="qr-panel" aria-label="Codigos QR">
+                <div class="qr-card">
+                  <div class="qr-box">
+                    <img src="public/qr-whatsapp.svg" alt="QR WhatsApp" />
+                  </div>
+                  <div class="qr-label"><span class="arrow">-&gt;</span>Celular</div>
+                  <div class="qr-target">WhatsApp directo</div>
+                </div>
+
+                <div class="qr-card">
+                  <div class="qr-box">
+                    <img src="public/qr-web.svg" alt="QR sitio web" />
+                  </div>
+                  <div class="qr-label"><span class="arrow">-&gt;</span>Pagina web</div>
+                  <div class="qr-target">www.navsolutions.cl</div>
+                </div>
+              </div>
+            </div>
+            <div class="rule" aria-hidden="true"></div>
+          </div>
+          <div class="crop" aria-hidden="true"></div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

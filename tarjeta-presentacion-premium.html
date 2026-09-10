@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tarjeta Premium - NavSolutions</title>
+    <style>
+      :root {
+        --trim-w: 90mm;
+        --trim-h: 50mm;
+        --bleed: 3mm;
+        --card-w: calc(var(--trim-w) + var(--bleed) * 2);
+        --card-h: calc(var(--trim-h) + var(--bleed) * 2);
+        --black: #020403;
+        --ink: #f7faf4;
+        --muted: rgba(247, 250, 244, 0.66);
+        --line: rgba(247, 250, 244, 0.14);
+        --green: #4dff00;
+        --lime: #d7ff2f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #d9ded5;
+        color: var(--ink);
+        font-family: Inter, Manrope, Arial, sans-serif;
+      }
+
+      .screen {
+        padding: 34px;
+      }
+
+      .toolbar {
+        max-width: 980px;
+        margin: 0 auto 24px;
+        color: #141b15;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .toolbar h1 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        letter-spacing: 0;
+      }
+
+      .toolbar p {
+        margin: 0;
+        color: #556052;
+      }
+
+      .sheet {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        justify-content: center;
+      }
+
+      .card-wrap {
+        position: relative;
+        width: var(--card-w);
+        height: var(--card-h);
+        filter: drop-shadow(0 22px 38px rgba(2, 4, 3, 0.22));
+      }
+
+      .card {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 17% 12%, rgba(215, 255, 47, 0.18), transparent 22%),
+          radial-gradient(circle at 92% 92%, rgba(77, 255, 0, 0.2), transparent 24%),
+          linear-gradient(135deg, #111d12 0%, #020403 58%, #061006 100%);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: var(--bleed);
+        border: 1px solid rgba(247, 250, 244, 0.12);
+      }
+
+      .safe {
+        position: absolute;
+        inset: calc(var(--bleed) + 6mm);
+        z-index: 2;
+      }
+
+      .brand-row {
+        display: inline-flex;
+        align-items: center;
+        gap: 3mm;
+      }
+
+      .mark {
+        width: 10.8mm;
+        height: 10.8mm;
+        flex: none;
+      }
+
+      .brand {
+        font-size: 12pt;
+        font-weight: 850;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .brand span {
+        color: var(--green);
+      }
+
+      .tagline {
+        margin-top: 1.1mm;
+        color: rgba(247, 250, 244, 0.5);
+        font-size: 4.4pt;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .slash {
+        position: absolute;
+        right: 7mm;
+        top: -12mm;
+        width: 10mm;
+        height: 76mm;
+        background: linear-gradient(180deg, var(--lime), var(--green));
+        transform: rotate(20deg);
+        opacity: 0.94;
+      }
+
+      .slash::after {
+        content: "";
+        position: absolute;
+        inset: 1.2mm;
+        border: 1px solid rgba(2, 4, 3, 0.2);
+      }
+
+      .front .safe {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+      }
+
+      .pitch {
+        align-self: center;
+        max-width: 54mm;
+      }
+
+      .eyebrow {
+        margin: 0 0 2.6mm;
+        color: var(--green);
+        font-size: 5.2pt;
+        font-weight: 850;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .pitch h2 {
+        margin: 0;
+        font-size: 13.4pt;
+        font-weight: 850;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .pitch p {
+        margin: 2.4mm 0 0;
+        max-width: 40mm;
+        color: var(--muted);
+        font-size: 5.25pt;
+        font-weight: 580;
+        line-height: 1.42;
+      }
+
+      .proof {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        gap: 2.6mm;
+        margin-bottom: 2.2mm;
+        color: rgba(247, 250, 244, 0.76);
+        font-size: 5pt;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .proof strong {
+        display: inline;
+        color: var(--ink);
+        font-size: inherit;
+        letter-spacing: 0;
+      }
+
+      .back .safe {
+        display: grid;
+        grid-template-columns: 38mm 1fr;
+        gap: 4.4mm;
+        align-items: stretch;
+      }
+
+      .left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-width: 0;
+      }
+
+      .name {
+        margin-top: 5mm;
+        font-size: 10.8pt;
+        font-weight: 850;
+        line-height: 1.05;
+      }
+
+      .role {
+        margin-top: 1.4mm;
+        color: var(--muted);
+        font-size: 5.2pt;
+        font-weight: 650;
+        line-height: 1.35;
+      }
+
+      .direct {
+        display: grid;
+        gap: 1mm;
+        color: var(--ink);
+        font-size: 5pt;
+        font-weight: 720;
+        line-height: 1.22;
+      }
+
+      .direct span {
+        display: block;
+        color: var(--green);
+        font-size: 4.8pt;
+        font-weight: 850;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .cta-panel {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.2mm;
+        align-content: end;
+        min-width: 0;
+        border-left: 1px solid var(--line);
+        padding-left: 4.4mm;
+      }
+
+      .cta-panel::before {
+        content: "Escanea y conversemos";
+        position: absolute;
+        left: 4.4mm;
+        top: 0;
+        width: 31mm;
+        color: var(--ink);
+        font-size: 7.7pt;
+        font-weight: 850;
+        line-height: 1.05;
+      }
+
+      .qr-card {
+        align-self: end;
+        min-width: 0;
+      }
+
+      .qr-box {
+        display: grid;
+        width: 14.8mm;
+        height: 14.8mm;
+        place-items: center;
+        background: #ffffff;
+        padding: 1.35mm;
+      }
+
+      .qr-box img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .qr-label {
+        margin-top: 1mm;
+        color: var(--ink);
+        font-size: 4.5pt;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        line-height: 1.15;
+        text-transform: uppercase;
+      }
+
+      .qr-label span {
+        color: var(--green);
+      }
+
+      .qr-target {
+        margin-top: 0.4mm;
+        color: var(--muted);
+        font-size: 4pt;
+        font-weight: 650;
+        line-height: 1.15;
+      }
+
+      .crop {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .crop::before,
+      .crop::after,
+      .card-wrap::before,
+      .card-wrap::after {
+        content: "";
+        position: absolute;
+        z-index: 5;
+        background: #303830;
+      }
+
+      .crop::before {
+        left: var(--bleed);
+        top: 0;
+        width: 1px;
+        height: 2.2mm;
+        box-shadow: 90mm 0 #303830, 0 53.8mm #303830, 90mm 53.8mm #303830;
+      }
+
+      .crop::after {
+        left: 0;
+        top: var(--bleed);
+        width: 2.2mm;
+        height: 1px;
+        box-shadow: 93.8mm 0 #303830, 0 50mm #303830, 93.8mm 50mm #303830;
+      }
+
+      .card-wrap::before {
+        right: var(--bleed);
+        top: 0;
+        width: 1px;
+        height: 2.2mm;
+      }
+
+      .card-wrap::after {
+        right: var(--bleed);
+        bottom: 0;
+        width: 1px;
+        height: 2.2mm;
+      }
+
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      @media print {
+        body {
+          background: white;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+
+        .screen {
+          padding: 0;
+        }
+
+        .toolbar {
+          display: none;
+        }
+
+        .sheet {
+          justify-content: flex-start;
+          gap: 10mm;
+        }
+
+        .card-wrap {
+          break-inside: avoid;
+          filter: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="screen">
+      <section class="toolbar">
+        <h1>Tarjeta premium NavSolutions</h1>
+        <p>Formato 90 x 50 mm con 3 mm de sangrado. Imprimir al 100%, doble cara, voltear por borde corto.</p>
+      </section>
+
+      <section class="sheet" aria-label="Tarjeta premium imprimible">
+        <article class="card-wrap" aria-label="Frente premium">
+          <div class="card front">
+            <div class="slash" aria-hidden="true"></div>
+            <div class="safe">
+              <div class="brand-row" aria-label="NavSolutions">
+                <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="N">
+                  <defs>
+                    <linearGradient id="front-bg" x1="12" y1="8" x2="52" y2="56">
+                      <stop offset="0%" stop-color="#132014" />
+                      <stop offset="100%" stop-color="#030705" />
+                    </linearGradient>
+                    <linearGradient id="front-stroke" x1="10" y1="8" x2="54" y2="56">
+                      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.28" />
+                      <stop offset="58%" stop-color="#4DFF00" stop-opacity="0.26" />
+                      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.08" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M16 6.5h32c5.25 0 9.5 4.25 9.5 9.5v32c0 5.25-4.25 9.5-9.5 9.5H16c-5.25 0-9.5-4.25-9.5-9.5V16c0-5.25 4.25-9.5 9.5-9.5Z" fill="url(#front-bg)" />
+                  <path d="M16 7.25h32c4.83 0 8.75 3.92 8.75 8.75v32c0 4.83-3.92 8.75-8.75 8.75H16c-4.83 0-8.75-3.92-8.75-8.75V16c0-4.83 3.92-8.75 8.75-8.75Z" fill="none" stroke="url(#front-stroke)" stroke-width="1.5" />
+                  <path d="M19 45V19h7.5l17.8 25.6V19H50v26h-7.5L24.7 19.4V45H19Z" fill="#F7FAF4" />
+                  <path d="M31.1 19h6.1l-4.3 26h-6.1L31.1 19Z" fill="#4DFF00" opacity="0.9" />
+                </svg>
+                <div>
+                  <div class="brand">NAV<span>Solutions</span></div>
+                  <div class="tagline">Software que transforma</div>
+                </div>
+              </div>
+
+              <div class="pitch">
+                <p class="eyebrow">Deja de perder horas</p>
+                <h2>Si tu equipo repite tareas, estás perdiendo plata.</h2>
+                <p>Te mostramos qué automatizar primero y lo convertimos en software a medida.</p>
+              </div>
+
+              <div class="proof">
+                <span><strong>Diagnostico gratis</strong></span>
+                <span><strong>Software a medida</strong></span>
+                <span><strong>Web navsolutions.cl</strong></span>
+              </div>
+            </div>
+          </div>
+          <div class="crop" aria-hidden="true"></div>
+        </article>
+
+        <article class="card-wrap" aria-label="Reverso premium">
+          <div class="card back">
+            <div class="safe">
+              <div class="left">
+                <div>
+                  <div class="brand-row" aria-label="NavSolutions">
+                    <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="N">
+                      <defs>
+                        <linearGradient id="back-bg" x1="12" y1="8" x2="52" y2="56">
+                          <stop offset="0%" stop-color="#132014" />
+                          <stop offset="100%" stop-color="#030705" />
+                        </linearGradient>
+                        <linearGradient id="back-stroke" x1="10" y1="8" x2="54" y2="56">
+                          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.28" />
+                          <stop offset="58%" stop-color="#4DFF00" stop-opacity="0.26" />
+                          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.08" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M16 6.5h32c5.25 0 9.5 4.25 9.5 9.5v32c0 5.25-4.25 9.5-9.5 9.5H16c-5.25 0-9.5-4.25-9.5-9.5V16c0-5.25 4.25-9.5 9.5-9.5Z" fill="url(#back-bg)" />
+                      <path d="M16 7.25h32c4.83 0 8.75 3.92 8.75 8.75v32c0 4.83-3.92 8.75-8.75 8.75H16c-4.83 0-8.75-3.92-8.75-8.75V16c0-4.83 3.92-8.75 8.75-8.75Z" fill="none" stroke="url(#back-stroke)" stroke-width="1.5" />
+                      <path d="M19 45V19h7.5l17.8 25.6V19H50v26h-7.5L24.7 19.4V45H19Z" fill="#F7FAF4" />
+                      <path d="M31.1 19h6.1l-4.3 26h-6.1L31.1 19Z" fill="#4DFF00" opacity="0.9" />
+                    </svg>
+                    <div>
+                      <div class="brand">NAV<span>Solutions</span></div>
+                      <div class="tagline">Software que transforma</div>
+                    </div>
+                  </div>
+                  <div class="name">Milo</div>
+                  <div class="role">Software a medida<br />Automatización de procesos</div>
+                </div>
+
+                <div class="direct">
+                  <div><span>Teléfono</span>+56 9 7869 6327</div>
+                  <div><span>Email</span>contacto@navsolutions.dev</div>
+                  <div><span>Web</span>www.navsolutions.cl</div>
+                </div>
+              </div>
+
+              <div class="cta-panel">
+                <div class="qr-card">
+                  <div class="qr-box">
+                    <img src="public/qr-whatsapp.svg" alt="QR WhatsApp" />
+                  </div>
+                  <div class="qr-label"><span>-&gt;</span> Celular</div>
+                  <div class="qr-target">Agenda por WhatsApp</div>
+                </div>
+
+                <div class="qr-card">
+                  <div class="qr-box">
+                    <img src="public/qr-web.svg" alt="QR pagina web" />
+                  </div>
+                  <div class="qr-label"><span>-&gt;</span> Web</div>
+                  <div class="qr-target">www.navsolutions.cl</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="crop" aria-hidden="true"></div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
