@@ -1,6 +1,7 @@
 export const NAV_LINKS = [
   { label: 'Proyectos', href: '#proyectos' },
   { label: 'Soluciones', href: '#soluciones' },
+  { label: 'Servicios', href: '#servicios' },
   { label: 'Proceso', href: '#proceso' },
   { label: 'Contacto', href: '#contacto' },
 ]
@@ -90,6 +91,57 @@ export const SOLUTION_TYPES = [
   'Sitios web',
   'Portales',
   'Intranets',
+]
+
+// Las tres formas de contratar. La del medio va marcada como destacada
+// porque es la combinación que el resto del sitio viene explicando:
+// la página capta y el sistema gestiona lo que entra por ella.
+export const SERVICE_TRACKS = [
+  {
+    id: 'landing',
+    kicker: 'Presencia',
+    title: 'Landing page',
+    lead: 'La cara visible de tu negocio.',
+    text: 'Una página que explica con claridad qué haces, a quién le sirve y cómo contactarte. Pensada para que una visita termine en una conversación.',
+    points: [
+      'Diseño a medida, sin plantillas',
+      'Se ve igual de bien en celular y escritorio',
+      'Carga rápida y preparada para buscadores',
+      'Formulario y WhatsApp conectados',
+    ],
+    forWho: 'Para negocios que necesitan mostrarse y captar contactos.',
+    featured: false,
+  },
+  {
+    id: 'landing-sistema',
+    kicker: 'Lo más completo',
+    title: 'Landing + Sistema',
+    lead: 'La cara visible y el motor, conectados.',
+    text: 'La página capta al cliente y el sistema gestiona lo que viene después. Cada contacto o solicitud entra directo a tu operación, sin copiar y pegar entre herramientas.',
+    points: [
+      'Todo lo de la landing page',
+      'Sistema a medida por detrás',
+      'Lo que entra por la web llega al sistema',
+      'Usuarios, roles y reportes',
+    ],
+    forWho: 'Para negocios que captan clientes y además necesitan ordenar la operación.',
+    featured: true,
+  },
+  {
+    id: 'sistema',
+    kicker: 'Operación',
+    title: 'Sistema a medida',
+    lead: 'Tu operación, ordenada.',
+    text: 'La plataforma interna con la que trabaja tu equipo todos los días: información en un solo lugar, procesos definidos y reportes que se generan solos.',
+    points: [
+      'Diseñado sobre tu proceso real',
+      'Información centralizada',
+      'Automatización de tareas repetitivas',
+      'Indicadores y reportes en vivo',
+    ],
+    forWho: 'Para equipos que hoy dependen de planillas y coordinación manual.',
+    featured: false,
+  },
 ]
 
 export const PROCESS_STEPS = [

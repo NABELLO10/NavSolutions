@@ -4,6 +4,7 @@ import BrandLogo from './BrandLogo'
 const FOOTER_LINKS = [
   { label: 'Proyectos', href: '#proyectos' },
   { label: 'Soluciones', href: '#soluciones' },
+  { label: 'Servicios', href: '#servicios' },
   { label: 'Contacto', href: '#contacto' },
 ]
 

@@ -119,7 +119,7 @@ export default function Header() {
         <MagneticButton
           as="a"
           href="#contacto"
-          className="hidden shrink-0 whitespace-nowrap rounded-full border border-white/15 px-4 py-2 font-sans text-[13px] text-white/90 transition-colors hover:border-accent-light/60 hover:text-accent-light md:inline-flex focus-ring lg:px-5 lg:py-2.5 lg:text-sm"
+          className="hidden shrink-0 whitespace-nowrap rounded-full border border-white/15 px-5 py-2.5 font-sans text-sm text-white/90 transition-colors hover:border-accent-light/60 hover:text-accent-light focus-ring lg:inline-flex"
         >
           Cuéntanos tu idea
         </MagneticButton>
