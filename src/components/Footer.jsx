@@ -1,4 +1,3 @@
-import { FaLinkedin } from 'react-icons/fa'
 import BrandLogo from './BrandLogo'
 
 const FOOTER_LINKS = [
@@ -39,22 +38,13 @@ export default function Footer() {
               {link.label}
             </a>
           ))}
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="flex items-center gap-2 py-2.5 font-sans text-sm text-white/50 transition-colors hover:text-white focus-ring"
-          >
-            <FaLinkedin /> LinkedIn
-          </a>
         </nav>
       </div>
 
       <div className="container-page mt-10 sm:mt-14">
         <div className="flex flex-col gap-2 border-t border-white/5 pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           <span className="font-sans text-xs text-white/30">© {year} NavSolutions</span>
-            <span className="font-sans text-xs text-white/20">Diseñado y construido a medida.</span>
+          <span className="font-sans text-xs text-white/20">Diseñado y construido a medida.</span>
         </div>
       </div>
     </footer>
