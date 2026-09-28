@@ -1,46 +1,26 @@
-export function BrandMark({ className = 'h-9 w-9' }) {
+// Raster logo pack lives in brand-source/logo_of (not published); public/brand
+// holds the trimmed, web-sized exports actually served (horizontal ≈ 6:1,
+// icon ≈ 1.7:1).
+const LOGO_SRC = '/brand/logo-horizontal.webp'
+const ICON_SRC = '/brand/logo-icon.webp'
+
+export function BrandMark({ className = 'h-9 w-auto' }) {
   return (
-    <svg
-      viewBox="0 0 64 64"
-      className={className}
-      role="img"
-      aria-label="NavSolutions"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <linearGradient id="nav-mark-bg" x1="12" y1="8" x2="52" y2="56">
-          <stop offset="0%" stopColor="#132014" />
-          <stop offset="100%" stopColor="#030705" />
-        </linearGradient>
-        <linearGradient id="nav-mark-stroke" x1="10" y1="8" x2="54" y2="56">
-          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.28" />
-          <stop offset="58%" stopColor="#4DFF00" stopOpacity="0.26" />
-          <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.08" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M16 6.5h32c5.25 0 9.5 4.25 9.5 9.5v32c0 5.25-4.25 9.5-9.5 9.5H16c-5.25 0-9.5-4.25-9.5-9.5V16c0-5.25 4.25-9.5 9.5-9.5Z"
-        fill="url(#nav-mark-bg)"
-      />
-      <path
-        d="M16 7.25h32c4.83 0 8.75 3.92 8.75 8.75v32c0 4.83-3.92 8.75-8.75 8.75H16c-4.83 0-8.75-3.92-8.75-8.75V16c0-4.83 3.92-8.75 8.75-8.75Z"
-        fill="none"
-        stroke="url(#nav-mark-stroke)"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M19 45V19h7.5l17.8 25.6V19H50v26h-7.5L24.7 19.4V45H19Z"
-        fill="#F7FAF4"
-      />
-      <path d="M31.1 19h6.1l-4.3 26h-6.1L31.1 19Z" fill="#4DFF00" opacity="0.9" />
-    </svg>
+    <img
+      src={ICON_SRC}
+      alt="NavSolutions"
+      width={400}
+      height={235}
+      draggable={false}
+      className={`select-none object-contain ${className}`}
+    />
   )
 }
 
 export default function BrandLogo({ compact = false, size = 'default', compactBar = false, className = '' }) {
   if (compact) {
     return (
-      <span className={`group/logo relative inline-flex ${className}`} aria-label="NAV Solutions">
+      <span className={`group/logo relative inline-flex ${className}`} aria-label="NavSolutions">
         <BrandMark
           className="h-full w-full origin-center transition-transform duration-500 ease-premium group-hover/logo:scale-[1.035]"
         />
@@ -51,37 +31,26 @@ export default function BrandLogo({ compact = false, size = 'default', compactBa
   const isLoader = size === 'loader'
   const isFooter = size === 'footer'
 
-  // The header shrinks its own padding on scroll; the mark and wordmark
-  // have to shrink with it or the bar stops looking deliberate.
-  const markClass = isLoader
-    ? 'h-14 w-14 shrink-0 xs:h-16 xs:w-16 sm:h-20 sm:w-20'
-    : `shrink-0 transition-[height,width] duration-300 ease-premium ${
-        compactBar ? 'h-9 w-9 sm:h-10 sm:w-10' : 'h-10 w-10 sm:h-11 sm:w-11 lg:h-12 lg:w-12'
-      }`
-
-  const nameClass = isLoader
-    ? 'font-display text-2xl font-extrabold tracking-normal text-white xs:text-3xl sm:text-4xl'
-    : `font-display font-extrabold tracking-normal text-white transition-[font-size] duration-300 ease-premium ${
-        compactBar ? 'text-lg sm:text-xl' : 'text-lg sm:text-xl lg:text-2xl'
-      }`
-
-  const taglineClass = isLoader
-    ? 'mt-2 font-sans text-[10px] font-medium tracking-[0.16em] text-white/45 sm:text-xs'
-    : `mt-1 font-sans text-[9px] font-medium tracking-[0.16em] text-white/45 transition-opacity duration-300 ${
-        isFooter ? 'hidden sm:block' : compactBar ? 'hidden' : 'hidden lg:block'
-      }`
+  // The header shrinks its own padding on scroll; the logo has to shrink
+  // with it or the bar stops looking deliberate.
+  const heightClass = isLoader
+    ? 'h-12 xs:h-14 sm:h-[4.5rem]'
+    : isFooter
+      ? 'h-9 sm:h-10'
+      : `transition-[height] duration-300 ease-premium ${
+          compactBar ? 'h-8 sm:h-9' : 'h-9 sm:h-10 lg:h-11'
+        }`
 
   return (
-    <span className={`group/logo relative inline-flex shrink-0 items-center gap-2.5 sm:gap-3 ${className}`}>
-      <BrandMark className={markClass} />
-      <span className="flex min-w-0 flex-col leading-none">
-        <span className={nameClass}>
-          NAV<span style={{ color: '#4DFF00' }}>Solutions</span>
-        </span>
-        <span className={taglineClass}>
-          SOFTWARE QUE TRANSFORMA
-        </span>
-      </span>
+    <span className={`group/logo relative inline-flex shrink-0 items-center ${className}`}>
+      <img
+        src={LOGO_SRC}
+        alt="NavSolutions — Software que transforma"
+        width={1100}
+        height={183}
+        draggable={false}
+        className={`w-auto max-w-full select-none object-contain ${heightClass}`}
+      />
     </span>
   )
 }

@@ -2,6 +2,7 @@ export const NAV_LINKS = [
   { label: 'Proyectos', href: '#proyectos' },
   { label: 'Soluciones', href: '#soluciones' },
   { label: 'Servicios', href: '#servicios' },
+  { label: 'Portafolio', href: '#portafolio' },
   { label: 'Proceso', href: '#proceso' },
   { label: 'Contacto', href: '#contacto' },
 ]
@@ -141,6 +142,42 @@ export const SERVICE_TRACKS = [
     ],
     forWho: 'Para equipos que hoy dependen de planillas y coordinación manual.',
     featured: false,
+  },
+]
+
+// Live work. Screenshots live in public/portfolio (1200x750 webp).
+export const PORTFOLIO = [
+  {
+    id: 'navsecurity',
+    name: 'navSecurity',
+    url: 'https://navsecurity.cl',
+    kind: 'Software a medida',
+    text: 'Plataforma para empresas de seguridad privada: guardias, turnos, marcas con ubicación desde el teléfono, relevos, portal del cliente, flota y finanzas en un solo sistema.',
+    tags: ['Sistema web', 'App móvil', 'Panel de gestión'],
+  },
+  {
+    id: 'healthsport',
+    name: 'HealthSport',
+    url: 'https://www.healthsport.cl/',
+    kind: 'Salud y deporte',
+    text: 'Centro de kinesiología, rehabilitación y deporte en Los Ángeles. Sitio con reserva de horas, contacto directo por WhatsApp e intranet para el equipo.',
+    tags: ['Sitio web', 'Reservas', 'Intranet'],
+  },
+  {
+    id: 'visiondevida',
+    name: 'Visión de Vida',
+    url: 'https://visiondevida.duckdns.org/',
+    kind: 'Comunidad',
+    text: 'Iglesia en Los Ángeles. Sitio con próximos eventos, inscripciones, galería, peticiones de oración e intranet para su organización interna.',
+    tags: ['Sitio web', 'Eventos', 'Intranet'],
+  },
+  {
+    id: 'londonbridge',
+    name: 'London Bridge',
+    url: 'https://londonbridge.cl/',
+    kind: 'Educación',
+    text: 'Instituto de idiomas. Sitio institucional con servicios, precios, testimonios y contacto para captar nuevos alumnos.',
+    tags: ['Sitio web', 'Landing'],
   },
 ]
 

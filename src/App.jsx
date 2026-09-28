@@ -12,6 +12,7 @@ import Transformation from './sections/Transformation/Transformation'
 import Systems from './sections/Systems/Systems'
 import WhatWeTransform from './sections/Transform/WhatWeTransform'
 import Services from './sections/Services/Services'
+import Portfolio from './sections/Portfolio/Portfolio'
 import Process from './sections/Process/Process'
 import KeySection from './sections/KeySection/KeySection'
 import Results from './sections/Results/Results'
@@ -48,7 +49,7 @@ export default function App() {
       <Header />
 
       <main>
-        <Hero ready={ready} enableHeavyFx={enableHeavyFx} enableAmbientFx={enableAmbientFx} />
+        <Hero ready={ready} enableHeavyFx={enableHeavyFx} reducedMotion={reducedMotion} tier={tier} />
         <Story />
         <Problems />
         <div className="cv-auto">
@@ -62,6 +63,9 @@ export default function App() {
         </div>
         <div className="cv-auto">
           <Services />
+        </div>
+        <div className="cv-auto">
+          <Portfolio />
         </div>
         <div className="cv-auto">
           <Process />

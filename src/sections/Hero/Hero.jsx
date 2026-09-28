@@ -1,11 +1,10 @@
 import { motion } from 'framer-motion'
-import HeroGrid from './HeroGrid'
-import HeroNetwork from './HeroNetwork'
+import HeroDepth from './HeroDepth'
 import HeroTransition from './HeroTransition'
 import AnimatedTitle from '../../components/AnimatedTitle'
 import MagneticButton from '../../components/MagneticButton'
 
-export default function Hero({ ready, enableHeavyFx, enableAmbientFx = true }) {
+export default function Hero({ ready, enableHeavyFx, reducedMotion = false, tier = 'medium' }) {
   return (
     <section
       id="top"
@@ -19,8 +18,10 @@ export default function Hero({ ready, enableHeavyFx, enableAmbientFx = true }) {
             'linear-gradient(180deg, rgba(1,2,1,0.99) 0%, rgba(1,2,1,0.97) 58%, rgba(3,12,6,0.78) 78%, rgba(3,12,6,0.26) 94%, rgba(1,2,1,0) 100%)',
         }}
       />
-      <HeroGrid />
-      <HeroNetwork interactive={enableHeavyFx} animated={enableAmbientFx} />
+      {/* Animated on every device tier (only density scales with it):
+          the old network canvas was gated on `tier !== 'low'`, and many
+          phones report as low, so they saw a frozen frame. */}
+      <HeroDepth interactive={enableHeavyFx} animated={!reducedMotion} tier={tier} />
       <HeroTransition />
 
       <div className="container-page pointer-events-none relative z-10 flex flex-1 flex-col justify-center">
